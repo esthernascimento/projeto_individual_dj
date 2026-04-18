@@ -1,0 +1,317 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font-family: 'Barlow', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+/* header */
+.header{
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 90%;
+  height: 90px;
+  background-color: #153b22;
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.header .container{
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header a{
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 25px;
+}
+
+.logo-header{
+  width: 350px;
+}
+
+.navbar{
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.agora a{
+  font-weight: 800;
+}
+
+.btn-login{
+  background-color: white;
+  color: #0d2114 !important;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 800 !important;
+}
+
+/* banner */
+.banner{
+  margin-top: 0px;
+  height: 800px;
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../assets/imgs/thee/banner-home.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner .container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.logo{
+  width: 1200px;
+}
+
+/* section historia */
+#historia {
+  background-color: #f8f8f8;
+  background-image: url('../assets/imgs/thee/banner-section.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 70px 20px;
+  text-align: center;
+}
+
+#titulo{
+  margin-bottom: 40px;
+}
+
+.titulo-blog{
+  font-size: 38px;
+  font-weight: 800;
+  color: #111;
+}
+
+.cards-container{
+  background-color: #1a3d28;
+  width: 400px;
+  height: 500px;
+  margin: 0 auto;
+  padding: 25px;
+  border-radius: 40px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cards-container img{
+  width: 100%;
+  border-radius: 15px;
+}
+
+.cards-container p{
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* historia 2 */
+#historia-2{
+  padding: 60px 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+#historia-titulos{
+  margin-bottom: 40px;
+}
+
+#historia-titulos h1{
+  font-size: 28px;
+  font-family: 'Courier New', Courier, monospace;
+  margin-bottom: 10px;
+}
+
+#historia-titulos h3{
+  font-size: 22px;
+  color: #444;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.container-verde{
+  background-color: #0f2416;
+  width: 85%;
+  margin: 0 auto;
+  border-radius: 40px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  color: white;
+  position: relative;
+}
+
+#walter, #jimmy{
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+#walter p, #jimmy p{
+  flex: 1;
+  font-size: 20px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.img-walter, .img-jimmy{
+  width: 350px;
+  border-radius: 10px;
+}
+
+#jimmy img{
+  width: 400px;
+}
+
+/* historia 3 */
+#historia-3{
+  padding: 20px 20px 60px;
+  background-color: #ffffff;
+}
+
+#historia-3 #historia-titulos{
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#historia-3 #historia-titulos h1{
+  font-size: 28px;
+  font-family: 'Courier New', Courier, monospace;
+  color: #1a3d28;
+  margin-bottom: 10px;
+}
+
+#historia-3 #historia-titulos p{
+  font-style: italic;
+  color: #555;
+  font-size: 15px;
+}
+
+#container-cinza{
+  background-color: #e2e2e2;
+  width: 85%;
+  margin: 0 auto;
+  border-radius: 50px;
+  padding: 50px;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+#div-esquerda{
+  flex: 1;
+}
+
+#div-esquerda img{
+  width: 100%;
+  border-radius: 20px;
+}
+
+#div-direita{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.estrelhinhas-coloridas{
+  width: 110px;
+}
+
+#div-direita p{
+  font-size: 17px;
+  color: #1a3d28;
+  font-weight: 600;
+  text-align: right;
+  line-height: 1.5;
+}
+
+#div-direita img:last-child{
+  width: 100%;
+  border-radius: 20px;
+}
+
+/* footer */
+.footer{
+  background-color: #000000;
+  color: #fff;
+  padding: 40px 0;
+}
+
+.footer .container{
+  display: flex;
+  width: 85%;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img-fotter{
+  width: 380px;
+  margin-bottom: 10px;
+}
+
+.img-icon{
+  width: 80px;
+}
+
+.footer h4{
+  font-size: 16px;
+  color: #aaa;
+  font-weight: 400;
+  margin-top: 8px;
+}
+
+div-links{
+  display: flex;
+  flex-direction: column !important;
+  gap: 8px;
+  font-size: 15px;
+}
+
+div-links img{
+  width: 25px;
+}
+
+div-links p{
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.footer a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 18px;
+}
