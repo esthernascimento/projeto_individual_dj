@@ -1,7 +1,21 @@
-/* Área de cadastro */
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Barlow', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #111;
+  color: #fff;
+}
+
+/* Área de login */
 .login {
   min-height: 100vh;
-  background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('../assets/imgs/thee/banner-cadastro.png');
+  background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+                    url('../assets/imgs/thee/banner-home.png');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -13,27 +27,26 @@
 
 .form-area {
   width: 100%;
-  max-width: 560px;
+  max-width: 500px;
   text-align: center;
 }
 
 /* Título */
-.titulo-cadastro {
-  font-size: 72px;
+.titulo-login {
+  font-size: 64px;
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: 4px;
-  margin-bottom: 40px;
+  letter-spacing: 6px;
+  margin-bottom: 50px;
   font-family: 'Courier New', Courier, monospace;
   text-transform: uppercase;
-  text-align: left;
 }
 
 /* Formulário */
 .formulario {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .formulario input {
@@ -60,15 +73,15 @@
 
 /* Botão */
 .botao {
-  margin-top: 10px;
-  width: 260px;
+  margin-top: 8px;
+  width: 220px;
   padding: 18px 30px;
   background-color: #153b22;
   color: #ffffff;
   font-size: 20px;
   font-weight: 800;
   font-family: 'Courier New', Courier, monospace;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   border: none;
   border-radius: 50px;
   cursor: pointer;
@@ -79,22 +92,24 @@
   background-color: #1f5430;
 }
 
-.link-login {
-  margin-top: 18px;
+/* Link cadastro */
+.link-cadastro {
+  margin-top: 20px;
   font-size: 15px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.75);
 }
 
-.link-login a {
+.link-cadastro a {
   color: #ffffff;
   font-weight: 700;
   text-decoration: underline;
 }
 
-.link-login a:hover {
+.link-cadastro a:hover {
   color: #7ecfa0;
 }
 
+/* Alerta de erro */
 .alerta_erro {
   position: fixed;
   top: 120px;
