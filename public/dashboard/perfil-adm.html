@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SET DOS DJs | Perfil</title>
+
+  <link rel="icon" href="../assets/imgs/thee/dj-icon.png">
+  <link rel="stylesheet" href="../css/dashboard/dashboad-adm.css">
+  <link rel="stylesheet" href="../css/dashboard/perfil-adm.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <aside class="barra-lateral">
+    <div style="height: 50px;"></div>
+
+    <a href="../dashboard/dashboard-adm.html" class="botao-menu">
+      <img src="../assets/icon/dash-icon.png" alt="dash">
+      DASH
+    </a>
+
+    <a href="../dashboard/perfil-adm.html" class="botao-menu">
+      <img src="../assets/icon/perfil-icon.png" alt="perfil">
+      PERFIL
+    </a>
+  </aside>
+
+  <main class="area-principal">
+
+    <div class="topo">
+      <div class="titulo">
+        <h1>PERFIL</h1>
+        <h2>MANTENHA SUAS INFORMAÇÕES DE CADASTRO ATUALIZADAS</h2>
+      </div>
+      <div class="topo-direito">
+        <div class="logo-topo">
+          <img src="../assets/imgs/thee/set-estrela.png" alt="Set dos DJs">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-perfil">
+      <div class="card-perfil">
+
+        <div class="foto-usuario">
+          <div class="avatar">
+            <label for="imagem_input" style="cursor: pointer;">
+              <img id="foto_perfil" class="avatar" src="../assets/icon/upload-icon.png" alt="Avatar">
+
+              <div class="icone-editar">
+                <img class="icone-editar" src="../assets/icon/cursor-icon.png" alt="Editar">
+              </div>
+            </label>
+
+            <input type="file" id="imagem_input" style="display: none;" accept="image/*"
+              onchange="exibirPreview(event)">
+          </div>
+        </div>
+
+        <div class="inputs-perfil">
+          <input class="campo" id="nome_input" type="text" value="Nome do Usuário" />
+          <input class="campo" id="email_input" type="text" value="usuario@email.com" />
+          <input class="campo" id="senha_input" type="password" value="123456" />
+          <button class="botao-salvar" onclick="atualizarPerfil()">SALVAR</button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+</body>
+
+</html>
+
+<script>
+  function exibirPreview(event) {
+    const entrada = event.target;
+    const leitor = new FileReader();
+
+    leitor.onload = function () {
+      const imagemPerfil = document.getElementById('foto_perfil');
+      imagemPerfil.src = leitor.result;
+    };
+
+    // Se houver um arquivo selecionado, ele lê
+    if (entrada.files && entrada.files[0]) {
+      leitor.readAsDataURL(entrada.files[0]);
+    }
+  }
+</script>

@@ -1,0 +1,155 @@
+.area-principal {
+  flex: 1;
+  background-color: #0f2416; 
+  padding: 24px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100vh;
+}
+
+.container-post {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card-post {
+  background-color: #f2f2f2;
+  width: 100%;
+  max-width: 500px; 
+  border-radius: 24px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+
+/* Moldura da imagem do post */
+.box-upload {
+  width: 400px; 
+  height: 180px; 
+  background-color: #0f2416;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+  overflow: hidden; 
+}
+
+.box-upload img {
+  width: 150px; 
+  transition: 0.3s;
+}
+
+.img-carregada {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+.box-upload:hover {
+  transform: scale(1.02);
+  background-color: #1a3d28;
+}
+
+.inputs-post {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.area-texto {
+  height: 100px;
+  resize: none; 
+  padding-top: 15px;
+}
+
+.botao-postar {
+  background-color: #0f2416; 
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s;
+  letter-spacing: 1px;
+}
+
+.botao-postar:hover {
+  background-color: #153b22;
+}
+
+
+.inputs-post {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.campo {
+  background-color: #e6e6e6;
+  border: none;
+  padding: 18px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 18px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 600;
+  color: #333;
+  outline: none;
+  width: 100%;
+}
+
+.campo::placeholder {
+  color: #888;
+}
+
+.area-texto {
+  height: 120px;
+  resize: none; /* Trava o tamanho */
+  padding-top: 15px;
+}
+
+.botao-postar {
+  background-color: #0f2416;
+  color: white;
+  border: none;
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s;
+  letter-spacing: 2px;
+  margin-top: 10px;
+}
+
+.botao-postar:hover {
+  background-color: #1a3d28;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.titulo h1 {
+  font-size: 40px;
+  color: white;
+  font-weight: 800;
+}
+
+.titulo h2 {
+  font-size: 16px;
+  color: #7ecfa0;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SET DOS DJs | Criar Post</title>
+
+    <link rel="icon" href="../assets/imgs/thee/dj-icon.png">
+    <link rel="stylesheet" href="../css/dashboard/dashboad-adm.css">
+    <link rel="stylesheet" href="../css/dashboard/criar-post.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <aside class="barra-lateral">
+        <div style="height: 50px;"></div>
+
+        <a href="../dashboard/dashboard-adm.html" class="botao-menu">
+            <img src="../assets/icon/dash-icon.png" alt="dash">
+            DASH
+        </a>
+
+        <a href="../dashboard/perfil-adm.html" class="botao-menu">
+            <img src="../assets/icon/perfil-icon.png" alt="perfil">
+            PERFIL
+        </a>
+    </aside>
+
+    <main class="area-principal">
+        <div class="topo">
+            <div class="titulo">
+                <h1>CRIAR POST</h1>
+                <h2>Faça um post para os usuários ESTRELAREM</h2>
+            </div>
+            <div class="topo-direito">
+                <div class="logo-topo">
+                    <img src="../assets/imgs/thee/set-estrela.png" alt="Set dos DJs">
+                </div>
+            </div>
+        </div>
+
+        <div class="container-post">
+            <div class="card-post">
+
+                <div class="upload-secao">
+                    <label for="imagem_input" class="label-upload">
+                        <div class="box-upload" id="moldura_preview">
+                            <img src="../assets/icon/nuvem-icon.png" id="img_preview" alt="Upload">
+                        </div>
+                        <input type="file" id="imagem_input" style="display: none;" accept="image/*"
+                            onchange="exibirPreview(event)">
+                    </label>
+                </div>
+
+                <div class="inputs-post">
+                    <input class="campo" id="titulo_input" type="text" placeholder="Título" />
+                    <textarea class="campo area-texto" id="conteudo_input" placeholder="Descrição"></textarea>
+                    <button class="botao-postar" onclick="publicar()">POSTAR</button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
+
+<script>
+    function exibirPreview(event) {
+        const input = event.target;
+        const preview = document.getElementById('img_preview');
+
+        if (input.files && input.files[0]) {
+            const leitor = new FileReader();
+
+            leitor.onload = function (e) {
+                preview.src = e.target.result;
+                preview.classList.add('img-carregada');
+            };
+
+            leitor.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

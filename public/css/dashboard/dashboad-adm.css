@@ -1,0 +1,264 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* barra lateral */
+.barra-lateral {
+  width: 190px;
+  min-width: 190px;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  gap: 12px;
+}
+
+.botao-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #249651;
+  color: white;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.botao-menu img {
+  width: 22px;
+  height: 22px;
+}
+
+.area-principal {
+  flex: 1;
+  background-color: #0f2416;
+  border-radius: 24px 0 0 24px;
+  padding: 24px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.titulo h1 {
+  font-size: 48px;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+}
+
+.titulo h2 {
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  font-weight: 800;
+  color: #7ecfa0;
+  letter-spacing: 3px;
+  margin-top: 6px;
+}
+
+.topo-direito {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.logo-topo img {
+  width: 160px;
+}
+
+.botao-criar {
+  background-color: white;
+  color: #0f2416;
+  padding: 10px 18px;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.botao-criar:hover {
+  background-color: #e0e0e0;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.coluna-esquerda,
+.coluna-direita {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+/* cards gráfico */
+.caixa-grafico {
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 12px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.caixa-grafico canvas {
+  max-height: 100%;
+}
+
+.barra-toggle {
+  height: 40px;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 30px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.barra-preenchida {
+  width: 55%;
+  height: 100%;
+  background-color: #6cf76c;
+  border-radius: 30px;
+}
+
+/* números */
+.numeros {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.card-numero {
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-numero img {
+  width: 36px;
+  height: 36px;
+}
+
+.numero-valor {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111;
+}
+
+.numero-rotulo {
+  font-size: 11px;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* post destaque */
+.card-destaque {
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.card-destaque img {
+  width: 30px;
+  height: 30px;
+}
+
+.card-destaque span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* posts recentes */
+.card-posts {
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 16px;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-posts h3 {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.lista-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+}
+
+.post {
+  background-color: #1a3d28;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.post-foto {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7ecfa0, #1a3d28);
+  flex-shrink: 0;
+}
+
+.post-texto {
+  font-size: 14px;
+  font-style: italic;
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+}

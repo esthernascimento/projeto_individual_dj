@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SET DOS DJs | Dashboard</title>
+
+  <link rel="icon" href="../assets/imgs/thee/dj-icon.png">
+  <link rel="stylesheet" href="../css/dashboard/dashboad-adm.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <aside class="barra-lateral">
+    <div style="height: 50px;"></div>
+
+    <a href="../dashboard/dashboard-adm.html" class="botao-menu">
+      <img src="../assets/icon/dash-icon.png" alt="dash">
+      DASH
+    </a>
+
+    <a href="../dashboard/perfil-adm.html" class="botao-menu">
+      <img src="../assets/icon/perfil-icon.png" alt="perfil">
+      PERFIL
+    </a>
+  </aside>
+
+  <main class="area-principal">
+
+    <div class="topo">
+      <div class="titulo">
+        <h1>DASHBOARD</h1>
+        <h2>BEM-VINDO(A) ADMINISTRADOR</h2>
+      </div>
+      <div class="topo-direito">
+        <div class="logo-topo">
+          <img src="../assets/imgs/thee/set-estrela.png" alt="Set dos DJs">
+        </div>
+        <a href="../dashboard/criar-post.html" class="botao-criar">+ CRIAR POST</a>
+      </div>
+    </div>
+
+    <div class="grade">
+      <!-- esquerda -->
+      <div class="coluna-esquerda">
+        <div class="caixa-grafico">
+          <canvas id="grafico-rosca"></canvas>
+        </div>
+
+        <div class="caixa-grafico">
+          <canvas id="grafico-linha"></canvas>
+        </div>
+
+        <div class="barra-toggle">
+          <div class="barra-preenchida"></div>
+        </div>
+      </div>
+
+      <!-- direita -->
+      <div class="coluna-direita">
+        <div class="numeros">
+          <div class="card-numero">
+            <img src="../assets/icon/estrela-icon.png" alt="estrelas">
+            <div>
+              <div class="numero-valor">248</div>
+              <div class="numero-rotulo">Total Estrelas</div>
+            </div>
+          </div>
+          <div class="card-numero">
+            <img src="../assets/icon/usuarios-icon.png" alt="usuarios">
+            <div>
+              <div class="numero-valor">1.2k</div>
+              <div class="numero-rotulo">Total Usuários</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-destaque">
+          <img src="../assets/icon/pin-icon.png" alt="post">
+          <span>POST MAIS ENGAJADO</span>
+        </div>
+
+        <div class="card-posts">
+          <h3>Posts mais recentes</h3>
+          <div class="lista-posts">
+            <div class="post">
+              <div class="post-foto"></div>
+              <span class="post-texto">DESCRIÇÃO</span>
+            </div>
+            <div class="post">
+              <div class="post-foto"></div>
+              <span class="post-texto">DESCRIÇÃO</span>
+            </div>
+            <div class="post">
+              <div class="post-foto"></div>
+              <span class="post-texto">DESCRIÇÃO</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+  
+</body>
+</html>
+
+<script>
+  // Preferências do Quiz (Ex: DJs favoritos ou Gêneros)
+  new Chart(document.getElementById('grafico-rosca'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Techno', 'House', 'Brazilian Bass', 'EDM'],
+      datasets: [{
+        label: 'Preferência dos Usuários',
+        data: [40, 25, 20, 15], // Dados que viriam do SELECT no seu banco
+        backgroundColor: ['#6cf76c', '#b040d0', '#2d6e3e', '#ffffff'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      cutout: '70%',
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: { color: 'white', font: { size: 12, family: 'Barlow' } }
+        },
+        title: {
+          display: true,
+          text: 'Gêneros Favoritos (Interações)',
+          color: 'white'
+        }
+      }
+    }
+  });
+
+  // Crescimento e Engajamento volume de novos cadastros e curtidas ao longo do tempo
+  new Chart(document.getElementById('grafico-linha'), {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+      datasets: [
+        {
+          label: 'Novos Usuários',
+          data: [5, 15, 10, 25, 30, 45],
+          borderColor: '#6cf76c',
+          backgroundColor: 'transparent',
+          tension: 0.4,
+          pointBackgroundColor: '#6cf76c'
+        },
+        {
+          label: 'Total de Curtidas',
+          data: [20, 45, 35, 60, 85, 120],
+          borderColor: '#c060e0',
+          backgroundColor: 'transparent',
+          tension: 0.4,
+          pointBackgroundColor: '#c060e0'
+        }
+      ]
+    },
+    options: {
+      plugins: {
+        legend: {
+          labels: { color: 'white', font: { size: 12, family: 'Barlow' } }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: 'white' },
+          grid: { color: 'rgba(255,255,255,0.1)' }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: { color: 'white' },
+          grid: { color: 'rgba(255,255,255,0.1)' }
+        }
+      }
+    }
+  });
+</script>
