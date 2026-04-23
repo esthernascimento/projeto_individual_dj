@@ -14,6 +14,10 @@ router.get("/sobre", function (req, res) {
     res.render("sobre");
 });
 
+router.get("/feed", function (req, res) {
+    res.render("feed");
+});
+
 /* rotas da dash */
 router.get("/dashboard-adm", function (req, res) {
     res.sendFile(path.resolve(__dirname, "../../public/dashboard/dashboard-adm.html"));

@@ -37,16 +37,10 @@
 
     <div class="container-cadastro">
       <div class="form-area">
-        <h1 class="titulo-cadastro">CADASTRO</h1>
+        <h1 class="titulo-cadastro">CURIOSIDADES</h1>
         <div class="formulario">
-          <div class="preview-container">
-            <label for="ipt_img_usuario">
-              <img id="img_preview" src="./assets/icon/upload-icon.png" alt="Preview">
-              <p class="legenda-foto">Sua foto</p>
-            </label>
-          </div>
 
-          <input id="nome_input" type="text" placeholder="Nome completo" />
+          <input id="estilo" type="text" placeholder="Nome completo" />
           <input id="dtNasc_input" type="date" placeholder="Data de Nascimento" />
           <input id="email_input" type="text" placeholder="E-mail: meuemail@provedor.com" />
           
@@ -55,11 +49,10 @@
           <input id="senha_input" type="password" placeholder="Senha: ******" />
           <input id="confirmacao_senha_input" type="password" placeholder="Confirmar senha: ******" />
 
-          <a href="./cadastro2.html"><button class="botao" onclick="cadastrar()">PRÓXIMO...</button></a>
+          <a href="./feed.html"><button class="botao" onclick="cadastrar()">CADASTRAR</button></a>
           
         </div>
 
-        <p class="link-login">Já tem cadastro? <a href="login.html">Faça login</a></p>
       </div>
 
       <div class="decoracao-area">
@@ -137,19 +130,5 @@
     return false;
   }
 
-  function exibirPreview(event) {
-  const input = event.target;
-  const preview = document.getElementById('img_preview');
-
-  if (input.files && input.files[0]) {
-    const leitor = new FileReader();
-
-    leitor.onload = function(e) {
-      preview.src = e.target.result;
-    };
-
-    leitor.readAsDataURL(input.files[0]);
-  }
-}
 </script>
 </html>

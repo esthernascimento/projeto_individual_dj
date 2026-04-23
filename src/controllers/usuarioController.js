@@ -52,6 +52,16 @@ function autenticar(req, res) {
                 res.status(500).json(erro.sqlMessage);
             });
     }
+
+    function buscarUsuarioPeloId(req, res) {
+      console.log(req.params.idUsuario);
+      usuarioModel.buscarUsuarioPeloId(req.params.idUsuario)
+      .then(resultado => {
+        res.json(resultado);
+      }).catch(err => {
+        res.status(500).send(err);
+      });
+    }
 }
 
 module.exports = {

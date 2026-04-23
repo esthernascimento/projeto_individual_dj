@@ -16,9 +16,23 @@
   height: 100%;
 }
 
-.logo{
-  width: 1200px;
+.decoracao-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
+
+.logo {
+  width: 1200px;
+  filter: drop-shadow(0 0 20px rgba(126, 207, 160, 0.5));
+  animation: flutuar 3s ease-in-out infinite;
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
 
 #sobre {
   background-color: #0f2416;
@@ -51,7 +65,7 @@
 
 .estrela-decor {
   position: absolute;
-  left: -60px;
+  left: -90px;
   top: -20px;
   width: 260px;
   z-index: 0;

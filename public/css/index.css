@@ -30,8 +30,22 @@ body{
   height: 100%;
 }
 
-.logo{
+.decoracao-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
   width: 1200px;
+  filter: drop-shadow(0 0 20px rgba(126, 207, 160, 0.5));
+  animation: flutuar 3s ease-in-out infinite;
+}
+
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
 }
 
 /* section historia */

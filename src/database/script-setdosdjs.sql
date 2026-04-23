@@ -11,7 +11,9 @@ CREATE TABLE usuario (
     CONSTRAINT chk_tipo CHECK (tipoUser IN ('Administrador', 'Usuário')),
     imagemUsuario VARCHAR(255),
     dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
-    statusUser TINYINT DEFAULT 1 
+    statusUser TINYINT DEFAULT 1,
+    estiloMusical VARCHAR(50),
+
 );
 
 CREATE TABLE post (
@@ -33,17 +35,14 @@ CREATE TABLE curtida (
     CONSTRAINT fkPostCurtida FOREIGN KEY (fkPost) REFERENCES post(idPost)
 );
 
-CREATE TABLE pergunta (
-    idPergunta INT PRIMARY KEY AUTO_INCREMENT,
-    texto VARCHAR(255) NOT NULL
-);
 
-CREATE TABLE resposta (
-    idResposta INT PRIMARY KEY AUTO_INCREMENT,
-    fkUsuario INT, 
-    fkPergunta INT, 
-    respostaEscolhida VARCHAR(100),
-    dtResposta DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fkUsuarioResposta FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
-    CONSTRAINT fkPerguntaResposta FOREIGN KEY (fkPergunta) REFERENCES pergunta(idPergunta)
-);
+CREATE TABLE comentario (
+    fkUsuario INT,
+    fkPost INT,
+    dtComentario DATETIME DEFAULT CURRENT_TIMESTAMP,
+    comentarioDescricao VARCHAR(255),
+    CONSTRAINT fkUsuarioComentario FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
+    CONSTRAINT fkPostComentario FOREIGN KEY (fkPost) REFERENCES post(idPost),
+    statusComentario TINYINT DEFAULT 0,
+    
+); 
