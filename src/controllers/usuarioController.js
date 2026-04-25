@@ -5,23 +5,16 @@ function cadastrar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
     var dtNasc = req.body.dtNascServer;
+    var estilo = req.body.estiloServer;
 
-    var imagem;
-    if (req.file != undefined) {
-        imagem = req.file.filename;
-    } else {
-        imagem = "default.png"; 
-    }
+    var imagem = req.file ? req.file.filename : "default.png";
 
-    if (nome == undefined) {
-        res.status(400).send("Seu nome está indefinido!");
-    } else if (email == undefined) {
-        res.status(400).send("Seu email está indefinido!");
+    if (!nome || !email || !senha || !dtNasc || !estilo) {
+        res.status(400).send("Preencha todos os campos!");
     } else {
-        usuarioModel.cadastrar(nome, dtNasc, email, senha, imagem)
-            .then(function (resultado) {
-                res.json(resultado);
-            }).catch(function (erro) {
+        usuarioModel.cadastrar(nome, dtNasc, email, senha, imagem, estilo)
+            .then(resultado => res.json(resultado))
+            .catch(erro => {
                 console.log(erro);
                 res.status(500).json(erro.sqlMessage);
             });
@@ -43,7 +36,8 @@ function autenticar(req, res) {
                         email: resultado[0].email,
                         nome: resultado[0].nome,
                         tipoUser: resultado[0].tipoUser,
-                        imagemUsuario: resultado[0].imagemUsuario
+                        imagemUsuario: resultado[0].imagemUsuario,
+                        estiloMusical: resultado[0].estiloMusical 
                     });
                 } else {
                     res.status(403).send("Email e/ou senha inválido(s)");
@@ -52,19 +46,16 @@ function autenticar(req, res) {
                 res.status(500).json(erro.sqlMessage);
             });
     }
+} 
 
-    function buscarUsuarioPeloId(req, res) {
-      console.log(req.params.idUsuario);
-      usuarioModel.buscarUsuarioPeloId(req.params.idUsuario)
-      .then(resultado => {
-        res.json(resultado);
-      }).catch(err => {
-        res.status(500).send(err);
-      });
-    }
+function buscarUsuarioPeloId(req, res) {
+    usuarioModel.buscarUsuarioPeloId(req.params.idUsuario)
+        .then(resultado => res.json(resultado))
+        .catch(err => res.status(500).send(err));
 }
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    buscarUsuarioPeloId
 };

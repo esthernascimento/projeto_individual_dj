@@ -12,8 +12,7 @@ CREATE TABLE usuario (
     imagemUsuario VARCHAR(255),
     dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     statusUser TINYINT DEFAULT 1,
-    estiloMusical VARCHAR(50),
-
+    estiloMusical VARCHAR(50)
 );
 
 CREATE TABLE post (
@@ -43,6 +42,5 @@ CREATE TABLE comentario (
     comentarioDescricao VARCHAR(255),
     CONSTRAINT fkUsuarioComentario FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
     CONSTRAINT fkPostComentario FOREIGN KEY (fkPost) REFERENCES post(idPost),
-    statusComentario TINYINT DEFAULT 0,
-    
+    statusComentario TINYINT DEFAULT 0
 ); 

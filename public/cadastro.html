@@ -49,14 +49,23 @@
           <input id="nome_input" type="text" placeholder="Nome completo" />
           <input id="dtNasc_input" type="date" placeholder="Data de Nascimento" />
           <input id="email_input" type="text" placeholder="E-mail: meuemail@provedor.com" />
-          
-          <input id="ipt_img_usuario" type="file" accept="image/*" style="display: none;" onchange="exibirPreview(event)" />
+
+          <input id="ipt_img_usuario" type="file" accept="image/*" style="display: none;"
+            onchange="exibirPreview(event)" />
+          <select id="estiloMusical_input" class="select-estilo">
+            <option value="" disabled selected>Seu estilo musical favorito</option>
+            <option value="Techno">Techno</option>
+            <option value="House">House</option>
+            <option value="EDM">EDM</option>
+            <option value="Trance">Trance</option>
+            <option value="Outro">Outro</option>
+          </select>
 
           <input id="senha_input" type="password" placeholder="Senha: ******" />
           <input id="confirmacao_senha_input" type="password" placeholder="Confirmar senha: ******" />
 
-          <a href="./cadastro2.html"><button class="botao" onclick="cadastrar()">PRÓXIMO...</button></a>
-          
+          <button class="botao" onclick="cadastrar()">CADASTRAR</button>
+
         </div>
 
         <p class="link-login">Já tem cadastro? <a href="login.html">Faça login</a></p>
@@ -96,6 +105,7 @@
     const senhaVar = senha_input.value;
     const confirmacaoVar = confirmacao_senha_input.value;
     const foto = document.getElementById('ipt_img_usuario');
+    const estiloVar = estiloMusical_input.value;
 
     if (nomeVar == "" || dtNascVar == "" || emailVar == "" || senhaVar == "" || confirmacaoVar == "") {
       alert("Por favor, preencha todos os campos.");
@@ -111,11 +121,18 @@
       alert("Por favor, selecione uma foto de perfil.");
       return false;
     }
+
+    if (estiloVar == "") {
+        alert("Por favor, selecione seu estilo musical.");
+        return false;
+    }
+
     const formData = new FormData();
     formData.append("nomeServer", nomeVar);
     formData.append("dtNascServer", dtNascVar);
     formData.append("emailServer", emailVar);
     formData.append("senhaServer", senhaVar);
+    formData.append("estiloServer", estiloVar);
     formData.append("fotoPerfil", foto.files[0]);
 
     fetch("/usuarios/cadastrar", {
@@ -138,18 +155,19 @@
   }
 
   function exibirPreview(event) {
-  const input = event.target;
-  const preview = document.getElementById('img_preview');
+    const input = event.target;
+    const preview = document.getElementById('img_preview');
 
-  if (input.files && input.files[0]) {
-    const leitor = new FileReader();
+    if (input.files && input.files[0]) {
+      const leitor = new FileReader();
 
-    leitor.onload = function(e) {
-      preview.src = e.target.result;
-    };
+      leitor.onload = function (e) {
+        preview.src = e.target.result;
+      };
 
-    leitor.readAsDataURL(input.files[0]);
+      leitor.readAsDataURL(input.files[0]);
+    }
   }
-}
 </script>
+
 </html>
