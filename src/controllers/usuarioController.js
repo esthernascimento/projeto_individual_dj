@@ -54,8 +54,29 @@ function buscarUsuarioPeloId(req, res) {
         .catch(err => res.status(500).send(err));
 }
 
+function buscarUsuarioPeloEmail(req, res) {
+    var email = decodeURIComponent(req.params.email); // decodifica o @
+    usuarioModel.buscarUsuarioPeloEmail(email)
+        .then(resultado => res.json(resultado))
+        .catch(err => res.status(500).send(err));
+}
+
+function atualizar(req, res) {
+    var id = req.params.idUsuario;
+    var nome = req.body.nome;
+    var email = req.body.email;
+    var senha = req.body.senha;
+    var imagem = req.file ? req.file.filename : null;
+
+    usuarioModel.atualizar(id, nome, email, senha, imagem)
+        .then(resultado => res.json(resultado))
+        .catch(err => res.status(500).json(err.sqlMessage));
+}
+
 module.exports = {
     autenticar,
     cadastrar,
-    buscarUsuarioPeloId
+    buscarUsuarioPeloId,
+    buscarUsuarioPeloEmail,
+    atualizar
 };

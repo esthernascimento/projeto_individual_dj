@@ -29,8 +29,13 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+.img-carregada {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 15px;
+}
 
-/* Moldura da imagem do post */
 .box-upload {
   width: 400px; 
   height: 180px; 
@@ -40,7 +45,6 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: 0.3s;
   overflow: hidden; 
 }
 
@@ -49,11 +53,6 @@
   transition: 0.3s;
 }
 
-.img-carregada {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover;
-}
 
 .box-upload:hover {
   transform: scale(1.02);

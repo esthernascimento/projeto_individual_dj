@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SET DOS DJs | Login</title>
 
-  <script src="./js/sessao.js"></script>
+
   <link rel="stylesheet" href="./css/header-footer.css">
   <link rel="stylesheet" href="./css/login.css">
   <link rel="icon" href="./assets/imgs/thee/dj-icon.png">
@@ -38,7 +38,7 @@
 
     <div class="form-area">
       <h1 class="titulo-login">FAÇA LOGIN</h1>
-      
+
       <div class="formulario">
         <input id="email_input" type="text" placeholder="e-mail" />
         <input id="senha_input" type="password" placeholder="senha" />
@@ -73,6 +73,10 @@
 
 </body>
 
+</html>
+
+
+<script src="../js/sessao.js"></script>
 <script>
   function entrar() {
     var emailVar = email_input.value;
@@ -96,20 +100,34 @@
     })
       .then(function (resposta) {
         if (resposta.ok) {
-          resposta.json().then(json => {
-            sessionStorage.EMAIL_USUARIO = json.email;
-            sessionStorage.NOME_USUARIO = json.nome;
-            sessionStorage.ID_USUARIO = json.id;
+          resposta.json().then(function (json) {
+            // salva TUDO na sessão agora - pra mim conseguir puxar no perfil do usuário
+            sessionStorage.setItem("ID_USUARIO", json.idUsuario);
+            sessionStorage.setItem("NOME_USUARIO", json.nome);
+            sessionStorage.setItem("EMAIL_USUARIO", json.email);
+            sessionStorage.setItem("TIPO_USUARIO", json.tipoUser);
+            sessionStorage.setItem("FOTO_USUARIO", json.imagemUsuario || "");
+            sessionStorage.setItem("ESTILO_USUARIO", json.estiloMusical || "");
+
+            console.log("SESSÃO SALVA");
+            console.log("ID:", sessionStorage.getItem("ID_USUARIO"));
+            console.log("NOME:", sessionStorage.getItem("NOME_USUARIO"));
+            console.log("EMAIL:", sessionStorage.getItem("EMAIL_USUARIO"));
+            console.log("TIPO:", sessionStorage.getItem("TIPO_USUARIO"));
+            console.log("FOTO:", sessionStorage.getItem("FOTO_USUARIO"));
+            console.log("ESTILO:", sessionStorage.getItem("ESTILO_USUARIO"));
 
             setTimeout(function () {
-              window.location = "feed.html";
+              if (json.tipoUser == "Administrador") {
+                window.location = "dashboard/dashboard-adm.html";
+              } else {
+                window.location = "usuario/feed.html";
+              }
             }, 1000);
           });
         } else {
-          resposta.text().then(texto => {
-            cardErro.style.display = "block";
-            mensagem_erro.innerHTML = "E-mail ou senha inválidos.";
-          });
+          cardErro.style.display = "block";
+          mensagem_erro.innerHTML = "E-mail ou senha inválidos.";
         }
       })
       .catch(function (erro) {
@@ -122,6 +140,5 @@
   function sumirMensagem() {
     cardErro.style.display = "none";
   }
-</script>
 
-</html>
+</script>

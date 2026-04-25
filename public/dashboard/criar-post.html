@@ -14,19 +14,23 @@
 </head>
 
 <body>
-    <aside class="barra-lateral">
-        <div style="height: 50px;"></div>
 
-        <a href="../dashboard/dashboard-adm.html" class="botao-menu">
-            <img src="../assets/icon/dash-icon.png" alt="dash">
-            DASH
-        </a>
+  <aside class="barra-lateral">
+    <div style="height: 50px;"></div>
 
-        <a href="../dashboard/perfil-adm.html" class="botao-menu">
-            <img src="../assets/icon/perfil-icon.png" alt="perfil">
-            PERFIL
-        </a>
-    </aside>
+    <a href="../dashboard/dashboard-adm.html" class="botao-menu">
+      <img src="../assets/icon/dash-icon.png" alt="dash">
+      DASH
+    </a>
+
+    <a href="../dashboard/perfil-adm.html" class="botao-menu">
+      <img src="../assets/icon/perfil-icon.png" alt="perfil">
+      PERFIL
+    </a>
+    <div class="logout-container">
+        <button class="botao-menu logout" onclick="limparSessao()">SAIR</button>
+    </div>
+  </aside>
 
     <main class="area-principal">
         <div class="topo">
@@ -67,20 +71,42 @@
 </body>
 </html>
 
+<script src="../js/sessao.js"></script>
 <script>
-    function exibirPreview(event) {
-        const input = event.target;
-        const preview = document.getElementById('img_preview');
+function exibirPreview(event) {
+  const input = event.target;
+  const preview = document.getElementById('img_preview');
 
-        if (input.files && input.files[0]) {
-            const leitor = new FileReader();
+  if (input.files && input.files[0]) {
+    const leitor = new FileReader();
 
-            leitor.onload = function (e) {
-                preview.src = e.target.result;
-                preview.classList.add('img-carregada');
-            };
+    leitor.onload = function (e) {
+      preview.src = e.target.result;
+      preview.classList.add('img-carregada'); 
+    };
 
-            leitor.readAsDataURL(input.files[0]);
-        }
-    }
+    leitor.readAsDataURL(input.files[0]);
+  }
+}
+  function publicar() {
+    const formData = new FormData();
+
+    formData.append("titulo", titulo_input.value);
+    formData.append("conteudo", conteudo_input.value);
+    formData.append("imagem", imagem_input.files[0]);
+    formData.append("fkAdmin", sessionStorage.ID_USUARIO);
+
+    fetch("/posts/publicar", {
+      method: "POST",
+      body: formData
+    })
+    .then(res => {
+      if (res.ok) {
+        alert("Post publicado!");
+        window.location = "../usuario/feed.html";
+      } else {
+        alert("Erro ao publicar");
+      }
+    });
+  }
 </script>

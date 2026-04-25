@@ -1,0 +1,129 @@
+.container-posts {
+    max-width: 1100px;
+    margin: 150px auto;
+    padding: 40px 20px;
+}
+
+.titulo-feed {
+    font: 800 28px 'Courier New', Courier, monospace;
+    letter-spacing: 3px;
+    color: #153b22;
+    margin-bottom: 30px;
+}
+
+.grade-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+/* Card */
+.card-post {
+    background: #153b22;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-post img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.titulo-post,
+.descricao-post {
+    background: #e8e8e8;
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #1a1a1a;
+    margin: 7px 14px;
+}
+
+.titulo-post {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.descricao-post {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* Botões e Ações */
+.acoes-post {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.botao-acao,
+.botao-sair {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.botao-acao:hover,
+.botao-sair:hover,
+.botao-enviar:hover {
+    opacity: 0.7;
+}
+
+/* Seção de Comentários */
+.secao-comentarios {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 12px 14px;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.secao-comentarios.aberta {
+    display: flex;
+}
+
+.item-comentario {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #eee;
+    margin-bottom: 6px;
+}
+
+.linha-comentario {
+    display: flex;
+    gap: 8px;
+}
+
+.input-comentario {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    padding: 8px 16px;
+    color: white;
+    outline: none;
+}
+
+.botao-enviar {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    color: white;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}

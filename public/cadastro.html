@@ -54,10 +54,46 @@
             onchange="exibirPreview(event)" />
           <select id="estiloMusical_input" class="select-estilo">
             <option value="" disabled selected>Seu estilo musical favorito</option>
-            <option value="Techno">Techno</option>
-            <option value="House">House</option>
-            <option value="EDM">EDM</option>
-            <option value="Trance">Trance</option>
+
+            <optgroup label="Música Eletrônica">
+              <option value="Techno">Techno (Hard, Melodic, Peak Time)</option>
+              <option value="House">House (Deep, Tech, Afro House)</option>
+              <option value="EDM / Big Room">EDM / Big Room</option>
+              <option value="Eletro / Electro House">Eletro / Electro House</option>
+              <option value="Psytrance / Trance">Psytrance / Trance</option>
+              <option value="Drum and Bass">Drum and Bass</option>
+              <option value="Nu Disco / Indie Dance">Nu Disco / Indie Dance</option>
+            </optgroup>
+
+            <optgroup label="Cena Urbana & Funk">
+              <option value="Funk Rave / Mandelão">Funk Rave / Mandelão</option>
+              <option value="Funk Carioca / 150bpm">Funk Carioca / 150bpm</option>
+              <option value="Trap / Hip Hop">Trap / Hip Hop</option>
+              <option value="Reggaeton / Dancehall">Reggaeton / Dancehall</option>
+            </optgroup>
+
+            <optgroup label="Pop & Hits">
+              <option value="Pop Nacional">Pop Nacional</option>
+              <option value="Pop Internacional">Pop Internacional</option>
+              <option value="Flashback (70s, 80s, 90s)">Flashback (70s, 80s, 90s)</option>
+            </optgroup>
+
+            <optgroup label="Brasilidades">
+              <option value="Pagode / Samba">Pagode / Samba</option>
+              <option value="Sertanejo Universitário">Sertanejo Universitário</option>
+              <option value="Piseiro / Forró">Piseiro / Forró</option>
+              <option value="Axé / Swingueira">Axé / Swingueira</option>
+              <option value="MPB">MPB</option>
+            </optgroup>
+
+            <optgroup label="Rock & Alternativo">
+              <option value="Rock (Clássico / Hard Rock)">Rock (Clássico / Hard Rock)</option>
+              <option value="Indie Rock">Indie Rock</option>
+              <option value="Punk / Hardcore">Punk / Hardcore</option>
+              <option value="Metal">Metal</option>
+              <option value="Reggae">Reggae</option>
+            </optgroup>
+
             <option value="Outro">Outro</option>
           </select>
 
@@ -123,8 +159,8 @@
     }
 
     if (estiloVar == "") {
-        alert("Por favor, selecione seu estilo musical.");
-        return false;
+      alert("Por favor, selecione seu estilo musical.");
+      return false;
     }
 
     const formData = new FormData();

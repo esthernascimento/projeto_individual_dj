@@ -14,9 +14,20 @@ router.get("/sobre", function (req, res) {
     res.render("sobre");
 });
 
-router.get("/feed", function (req, res) {
+/* rotas do usuário */
+router.get("usuario/feed", function (req, res) {
     res.render("feed");
 });
+
+router.get("usuario/perfil-usuario", function(re, res) {
+    res.render("perfil-usuario")
+});
+
+router.get("usuario/curiosidades", function(req, res){
+    res.render("curiosidades")
+});
+
+
 
 /* rotas da dash */
 router.get("/dashboard-adm", function (req, res) {

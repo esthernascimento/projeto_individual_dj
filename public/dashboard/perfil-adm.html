@@ -4,16 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SET DOS DJs | Perfil</title>
-
+  <title>SET DOS DJs | Perfil ADM</title>
   <link rel="icon" href="../assets/imgs/thee/dj-icon.png">
   <link rel="stylesheet" href="../css/dashboard/dashboad-adm.css">
   <link rel="stylesheet" href="../css/dashboard/perfil-adm.css">
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
+
 
   <aside class="barra-lateral">
     <div style="height: 50px;"></div>
@@ -27,69 +26,127 @@
       <img src="../assets/icon/perfil-icon.png" alt="perfil">
       PERFIL
     </a>
+    <div class="logout-container">
+        <button class="botao-menu logout" onclick="limparSessao()">SAIR</button>
+    </div>
   </aside>
 
   <main class="area-principal">
-
     <div class="topo">
       <div class="titulo">
         <h1>PERFIL</h1>
         <h2>MANTENHA SUAS INFORMAÇÕES DE CADASTRO ATUALIZADAS</h2>
       </div>
       <div class="topo-direito">
-        <div class="logo-topo">
-          <img src="../assets/imgs/thee/set-estrela.png" alt="Set dos DJs">
-        </div>
+
       </div>
     </div>
-
 
     <div class="container-perfil">
       <div class="card-perfil">
 
+        <!-- Foto -->
         <div class="foto-usuario">
           <div class="avatar">
             <label for="imagem_input" style="cursor: pointer;">
               <img id="foto_perfil" class="avatar" src="../assets/icon/upload-icon.png" alt="Avatar">
-
               <div class="icone-editar">
-                <img class="icone-editar" src="../assets/icon/cursor-icon.png" alt="Editar">
+                <img src="../assets/icon/cursor-icon.png" alt="Editar">
               </div>
             </label>
-
             <input type="file" id="imagem_input" style="display: none;" accept="image/*"
               onchange="exibirPreview(event)">
           </div>
         </div>
 
+        <!-- Campos -->
         <div class="inputs-perfil">
-          <input class="campo" id="nome_input" type="text" value="Nome do Usuário" />
-          <input class="campo" id="email_input" type="text" value="usuario@email.com" />
-          <input class="campo" id="senha_input" type="password" value="123456" />
+          <input class="campo" id="nome_input" type="text" placeholder="Nome">
+          <input class="campo" id="email_input" type="email" placeholder="Email">
+          <input class="campo" id="dtnasc_input" type="date" placeholder="Data de nascimento">
+          <input class="campo" id="estilo_input" type="text" placeholder="Estilo Musical">
+          <input class="campo" id="tipo_input" type="text" placeholder="Tipo de usuário" disabled>
+          <input class="campo" id="senha_input" type="password" placeholder="Nova senha (deixe vazio para não alterar)">
           <button class="botao-salvar" onclick="atualizarPerfil()">SALVAR</button>
         </div>
 
       </div>
     </div>
   </main>
-
 </body>
 
 </html>
 
+<script src="../js//sessao.js"></script>
 <script>
+  window.onload = function () {
+    validarSessao();
+    carregarPerfil();
+  };
+
   function exibirPreview(event) {
-    const entrada = event.target;
     const leitor = new FileReader();
-
     leitor.onload = function () {
-      const imagemPerfil = document.getElementById('foto_perfil');
-      imagemPerfil.src = leitor.result;
+      document.getElementById("foto_perfil").src = leitor.result;
     };
-
-    // Se houver um arquivo selecionado, ele lê
-    if (entrada.files && entrada.files[0]) {
-      leitor.readAsDataURL(entrada.files[0]);
+    if (event.target.files && event.target.files[0]) {
+      leitor.readAsDataURL(event.target.files[0]);
     }
+  }
+function carregarPerfil() {
+  var email = sessionStorage.getItem("EMAIL_USUARIO");
+  if (!email) return;
+
+  // encodeURIComponent resolve o @ e outros caracteres especiais na URL
+  fetch("/usuarios/email/" + encodeURIComponent(email))
+    .then(res => res.json())
+    .then(function (dados) {
+      var u = dados[0];
+
+      document.getElementById("nome_input").value= u.nome || "";
+      document.getElementById("email_input").value = u.email || "";
+      document.getElementById("estilo_input").value = u.estiloMusical || "";
+      document.getElementById("tipo_input").value = u.tipoUser || "";
+
+      if (u.dtNasc) {
+        document.getElementById("dtnasc_input").value = u.dtNasc.substring(0, 10);
+      }
+
+      if (u.imagemUsuario) {
+        document.getElementById("foto_perfil").src = "/assets/uploads/" + u.imagemUsuario;
+      }
+    })
+    .catch(err => console.error("Erro:", err));
+}
+
+  function atualizarPerfil() {
+    var id = sessionStorage.getItem("ID_USUARIO");
+    var nome = document.getElementById("nome_input").value.trim();
+    var email = document.getElementById("email_input").value.trim();
+    var senha = document.getElementById("senha_input").value.trim();
+
+    if (!nome || !email) {
+      alert("Nome e email são obrigatórios!");
+      return;
+    }
+
+    var corpo = { nome: nome, email: email };
+    if (senha) corpo.senha = senha;
+
+    fetch("/usuarios/" + id, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(corpo)
+    })
+      .then(function (res) {
+        if (res.ok) {
+          alert("Perfil atualizado com sucesso!");
+          sessionStorage.setItem("NOME_USUARIO", nome);
+          sessionStorage.setItem("EMAIL_USUARIO", email);
+        } else {
+          alert("Erro ao salvar. Tente novamente.");
+        }
+      })
+      .catch(err => console.error("Erro:", err));
   }
 </script>

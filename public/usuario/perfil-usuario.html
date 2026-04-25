@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SET DOS DJs | Perfil</title>
+  <link rel="stylesheet" href="../css/header-footer.css">
+  <link rel="stylesheet" href="../css/usuario/perfil-usuario.css">
+  <link rel="icon" href="../assets/imgs/thee/dj-icon.png">
+</head>
+<body>
+
+  <div class="header">
+    <div class="container">
+      <img class="logo-header" src="../assets/imgs/thee/logo-set.png" alt="">
+      <ul class="navbar">
+        <li><a href="perfil-usuario.html">Perfil</a></li>
+        <li><a href="curiosidades.html">Curiosidades</a></li>
+        <li><a href="feed.html">Feed</a></li>
+        <li><button class="botao-sair" onclick="limparSessao()">Sair</button></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-perfil">
+    <div class="card-perfil">
+
+      <div class="foto-usuario">
+        <div class="avatar">
+          <label for="foto-input" style="cursor: pointer;">
+            <img id="foto-perfil" src="../assets/imgs/thee/default.png" alt="Foto de perfil">
+          </label>
+          <input type="file" id="foto-input" style="display: none;" accept="image/*"
+            onchange="exibirPreview(event)">
+        </div>
+      </div>
+
+      <div class="inputs-perfil">
+        <input class="campo" id="campo-nome" type="text" placeholder="Nome">
+        <input class="campo" id="campo-email" type="email" placeholder="Email">
+        <input class="campo" id="campo-nasc" type="date" placeholder="Nascimento">
+        <input class="campo" id="campo-estilo" type="text" placeholder="Estilo Musical">
+        <input class="campo" id="campo-tipo" type="text" placeholder="Tipo" disabled>
+        <input class="campo" id="campo-senha" type="password" placeholder="Nova senha (opcional)">
+        <button class="botao-salvar" onclick="atualizarPerfil()">SALVAR</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <img class="img-fotter" src="../assets/imgs/thee/set-estrela.png" alt="Logo Set dos DJs">
+      <h4>&copy; 2026 Set dos DJ's – Esther Santos</h4>
+      <div-links>
+        <img src="../assets/icon/pasta-icon.png" class="img-icon" alt="pasta-icon">
+        <p>LINKS DE ACESSO</p>
+        <li><button class="botao-sair" onclick="limparSessao()">Sair</button></li>
+      </div-links>
+    </div>
+  </div>
+
+</body>
+</html>
+
+<script src="../js/sessao.js"></script>
+<script>
+  window.onload = function () {
+    validarSessao();
+    carregarPerfil();
+  };
+
+  function exibirPreview(event) {
+    const leitor = new FileReader();
+    leitor.onload = function () {
+      document.getElementById("foto-perfil").src = leitor.result;
+    };
+    if (event.target.files && event.target.files[0]) {
+      leitor.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  function carregarPerfil() {
+    var email = sessionStorage.getItem("EMAIL_USUARIO");
+    if (!email) return;
+
+    fetch("/usuarios/email/" + encodeURIComponent(email))
+      .then(res => res.json())
+      .then(function (dados) {
+        var u = dados[0];
+
+        sessionStorage.setItem("ID_USUARIO", u.idUsuario);
+
+        document.getElementById("campo-nome").value = u.nome || "";
+        document.getElementById("campo-email").value = u.email || "";
+        document.getElementById("campo-estilo").value = u.estiloMusical || "";
+        document.getElementById("campo-tipo").value = u.tipoUser || "";
+
+        if (u.dtNasc) {
+          document.getElementById("campo-nasc").value = u.dtNasc.substring(0, 10);
+        }
+
+        if (u.imagemUsuario) {
+          document.getElementById("foto-perfil").src = "/assets/uploads/" + u.imagemUsuario;
+        }
+      })
+      .catch(err => console.error("Erro ao carregar perfil:", err));
+  }
+
+  function atualizarPerfil() {
+    var id    = sessionStorage.getItem("ID_USUARIO");
+    var nome  = document.getElementById("campo-nome").value.trim();   // ou nome_input
+    var email = document.getElementById("campo-email").value.trim();  // ou email_input
+    var senha = document.getElementById("campo-senha").value.trim();  // ou senha_input
+    var foto  = document.getElementById("foto-input").files[0];       // ou imagem_input
+
+    if (!nome || !email) {
+        alert("Nome e email são obrigatórios!");
+        return;
+    }
+
+    // FormData em vez de JSON — igual ao cadastro
+    var formData = new FormData();
+    formData.append("nome",  nome);
+    formData.append("email", email);
+    if (senha) formData.append("senha", senha);
+    if (foto)  formData.append("fotoPerfil", foto);
+
+    fetch("/usuarios/" + id, {
+        method: "PUT",
+        body: formData  // sem header Content-Type — o browser define sozinho com boundary
+    })
+    .then(function (res) {
+        if (res.ok) {
+            alert("Perfil atualizado com sucesso!");
+            sessionStorage.setItem("NOME_USUARIO",  nome);
+            sessionStorage.setItem("EMAIL_USUARIO", email);
+        } else {
+            alert("Erro ao salvar. Tente novamente.");
+        }
+    })
+    .catch(err => console.error("Erro:", err));
+}
+</script>

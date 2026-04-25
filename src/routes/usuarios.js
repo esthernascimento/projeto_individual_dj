@@ -1,19 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var multer = require("multer");
 var usuarioController = require("../controllers/usuarioController");
 
-// Onde e como salvar o arquivo da foto
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public/assets/uploads/'); 
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + "_" + file.originalname);
-    }
-});
-
-var upload = multer({ storage: storage });
+const upload = require("../config/upload");
 
 router.post("/cadastrar", upload.single('fotoPerfil'), function (req, res) {
     usuarioController.cadastrar(req, res);
@@ -22,5 +11,10 @@ router.post("/cadastrar", upload.single('fotoPerfil'), function (req, res) {
 router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
+
+router.get("/email/:email", usuarioController.buscarUsuarioPeloEmail);
+router.get("/:idUsuario",   usuarioController.buscarUsuarioPeloId);
+// router.put("/:idUsuario", usuarioController.atualizar); 
+router.put("/:idUsuario", upload.single('fotoPerfil'), usuarioController.atualizar);
 
 module.exports = router;

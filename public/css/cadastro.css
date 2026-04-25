@@ -60,6 +60,16 @@ body {
   outline: none;
 }
 
+.formulario select{
+    width: 100%;
+  padding: 15px 25px;
+  border-radius: 50px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.95);
+  font-size: 16px;
+  outline: none;
+}
+
 .decoracao-area {
   flex: 1;
   display: flex;
