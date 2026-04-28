@@ -135,60 +135,64 @@
 
 <script>
   function cadastrar() {
-    const nomeVar = nome_input.value;
-    const dtNascVar = dtNasc_input.value;
-    const emailVar = email_input.value;
-    const senhaVar = senha_input.value;
-    const confirmacaoVar = confirmacao_senha_input.value;
-    const foto = document.getElementById('ipt_img_usuario');
-    const estiloVar = estiloMusical_input.value;
+  const nomeVar = nome_input.value;
+  const dtNascVar = dtNasc_input.value;
+  const emailVar = email_input.value;
+  const senhaVar = senha_input.value;
+  const confirmacaoVar = confirmacao_senha_input.value;
+  const foto = document.getElementById('ipt_img_usuario');
+  const estiloVar = estiloMusical_input.value;
 
-    if (nomeVar == "" || dtNascVar == "" || emailVar == "" || senhaVar == "" || confirmacaoVar == "") {
+  let campos = [nomeVar, dtNascVar, emailVar, senhaVar, confirmacaoVar];
+
+  for (let i = 0; i < campos.length; i++) {
+    if (campos[i] == "") {
       alert("Por favor, preencha todos os campos.");
       return false;
     }
+  }
 
-    if (senhaVar !== confirmacaoVar) {
-      alert("As senhas não coincidem!");
-      return false;
-    }
-
-    if (foto.files.length == 0) {
-      alert("Por favor, selecione uma foto de perfil.");
-      return false;
-    }
-
-    if (estiloVar == "") {
-      alert("Por favor, selecione seu estilo musical.");
-      return false;
-    }
-
-    const formData = new FormData();
-    formData.append("nomeServer", nomeVar);
-    formData.append("dtNascServer", dtNascVar);
-    formData.append("emailServer", emailVar);
-    formData.append("senhaServer", senhaVar);
-    formData.append("estiloServer", estiloVar);
-    formData.append("fotoPerfil", foto.files[0]);
-
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      body: formData
-    })
-      .then(resposta => {
-        if (resposta.ok) {
-          alert("Cadastro realizado com sucesso! Redirecionando para o login...");
-          window.location = "login.html";
-        } else {
-          alert("Erro ao realizar o cadastro. Verifique os dados ou se o e-mail já existe.");
-        }
-      })
-      .catch(erro => {
-        console.error(`#ERRO: ${erro}`);
-      });
-
+  if (senhaVar !== confirmacaoVar) {
+    alert("As senhas não coincidem!");
     return false;
   }
+
+  if (foto.files.length == 0) {
+    alert("Por favor, selecione uma foto de perfil.");
+    return false;
+  }
+
+  if (estiloVar == "") {
+    alert("Por favor, selecione seu estilo musical.");
+    return false;
+  }
+
+  const formData = new FormData();
+  formData.append("nomeServer", nomeVar);
+  formData.append("dtNascServer", dtNascVar);
+  formData.append("emailServer", emailVar);
+  formData.append("senhaServer", senhaVar);
+  formData.append("estiloServer", estiloVar);
+  formData.append("fotoPerfil", foto.files[0]);
+
+  fetch("/usuarios/cadastrar", {
+    method: "POST",
+    body: formData
+  })
+    .then(resposta => {
+      if (resposta.ok) {
+        alert("Cadastro realizado com sucesso! Redirecionando para o login...");
+        window.location = "login.html";
+      } else {
+        alert("Erro ao realizar o cadastro. Verifique os dados ou se o e-mail já existe.");
+      }
+    })
+    .catch(erro => {
+      console.error(`#ERRO: ${erro}`);
+    });
+
+  return false;
+}
 
   function exibirPreview(event) {
     const input = event.target;
