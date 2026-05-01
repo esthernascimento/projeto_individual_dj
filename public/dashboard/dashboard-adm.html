@@ -33,7 +33,7 @@
     </a>
 
     <div class="logout-container">
-        <button class="botao-menu logout" onclick="limparSessao()">SAIR</button>
+      <button class="botao-menu logout" onclick="limparSessao()">SAIR</button>
     </div>
   </aside>
 
@@ -54,8 +54,6 @@
 
     <div class="grade">
       <!-- esquerda -->
-
-   
       <div class="coluna-esquerda">
         <div class="caixa-grafico">
           <canvas id="grafico-rosca"></canvas>
@@ -63,10 +61,6 @@
 
         <div class="caixa-grafico">
           <canvas id="grafico-linha"></canvas>
-        </div>
-
-        <div class="barra-toggle">
-          <div class="barra-preenchida"></div>
         </div>
       </div>
 
@@ -76,22 +70,21 @@
           <div class="card-numero">
             <img src="../assets/icon/estrela-icon.png" alt="estrelas">
             <div>
-              <div class="numero-valor">248</div>
-              <div class="numero-rotulo">Total Estrelas</div>
+              <div class="numero-valor" id="totalCurtidas"></div> Total de Estrelas
+
             </div>
           </div>
           <div class="card-numero">
             <img src="../assets/icon/usuarios-icon.png" alt="usuarios">
             <div>
-              <div class="numero-valor">1.2k</div>
-              <div class="numero-rotulo">Total Usuários</div>
+              <div class="numero-valor" id="totalUsuarios"></div> Total de Usuários
             </div>
           </div>
         </div>
 
         <div class="card-destaque">
           <img src="../assets/icon/pin-icon.png" alt="post">
-          <span>POST MAIS ENGAJADO</span>
+          <span id="spanDestaque">POST MAIS ENGAJADO</span>
         </div>
 
         <div class="card-posts">
@@ -115,85 +108,168 @@
       </div>
     </div>
   </main>
-  
-</body>
-</html>
 
+</body>
+
+</html>
 <script src="../js/sessao.js"></script>
+
 <script>
   window.onload = function () {
-        validarSessao();
-    };
-    
-  // Preferências do cadastro (Ex: DJs favoritos ou Gêneros)
-  new Chart(document.getElementById('grafico-rosca'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Techno', 'House', 'Brazilian Bass', 'EDM'],
-      datasets: [{
-        label: 'Preferência dos Usuários',
-        data: [40, 25, 20, 15], // Dados que viriam do SELECT no seu banco
-        backgroundColor: ['#6cf76c', '#b040d0', '#2d6e3e', '#ffffff'],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      cutout: '70%',
-      plugins: {
-        legend: {
-          position: 'right',
-          labels: { color: 'white', font: { size: 12, family: 'Barlow' } }
-        },
-        title: {
-          display: true,
-          text: 'Gêneros Favoritos (Interações)',
-          color: 'white'
-        }
-      }
-    }
-  });
+    validarSessao();
+    carregarNumeros();
+    carregarGraficoBarras();
+    carregarGraficoRoscaInteracoes();
+    carregarPostsRecentes();
+    carregarPostMaisEngajado();
+  };
 
-  // Crescimento e Engajamento volume de novos cadastros e curtidas ao longo do tempo
-  new Chart(document.getElementById('grafico-linha'), {
-    type: 'line',
-    data: {
-      labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-      datasets: [
-        {
-          label: 'Novos Usuários',
-          data: [5, 15, 10, 25, 30, 45],
-          borderColor: '#6cf76c',
-          backgroundColor: 'transparent',
-          tension: 0.4,
-          pointBackgroundColor: '#6cf76c'
-        },
-        {
-          label: 'Total de Curtidas',
-          data: [20, 45, 35, 60, 85, 120],
-          borderColor: '#c060e0',
-          backgroundColor: 'transparent',
-          tension: 0.4,
-          pointBackgroundColor: '#c060e0'
+  function carregarNumeros() {
+    fetch("/dashboard/numeros")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("totalCurtidas").innerText = data.totalCurtidas;
+        document.getElementById("totalUsuarios").innerText = data.totalUsuarios;
+      })
+      .catch(err => console.error(err));
+  }
+
+  function carregarGraficoBarras() {
+    fetch("/dashboard/generos")
+      .then(res => res.json())
+      .then(dados => {
+        const labels = dados.map(g => g.estiloMusical);
+        const valores = dados.map(g => g.total);
+
+        new Chart(document.getElementById('grafico-rosca'), {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Quantidade de Fãs',
+              data: valores,
+              // array de cores para cada barra ficar diferente
+              backgroundColor: [
+                '#6cf76c', '#b040d0', '#471396', '#5DF8D8',
+                '#FAE251', '#FF4081', '#e74c3c', '#ecf0f1'
+              ]
+            }]
+          },
+          options: {
+            scales: {
+              y: { beginAtZero: true, ticks: { color: '#ffffff' } },
+              x: { ticks: { color: '#ffffff' } }
+            },
+            plugins: {
+              legend: { display: false },
+              title: { display: true, text: 'Gêneros Favoritos dos usuáios de acordo com o cadastro', color: '#ffffff' }
+            }
+          }
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
+  function carregarGraficoRoscaInteracoes() {
+    fetch("/dashboard/interacoes")
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Erro na API");
         }
-      ]
-    },
-    options: {
-      plugins: {
-        legend: {
-          labels: { color: 'white', font: { size: 12, family: 'Barlow' } }
+        return res.json();
+      })
+      .then(dados => {
+
+        console.log("INTERAÇÕES:", dados); // DEBUG pra mim ver
+
+        new Chart(document.getElementById('grafico-linha'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Curtidas', 'Comentários'],
+            datasets: [{
+              data: [
+                Number(dados.curtidas),
+                Number(dados.comentarios)
+              ],
+              backgroundColor: ['#b040d0', '#6cf76c'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            plugins: {
+              legend: { labels: { color: 'white' } },
+              title: { display: true, text: 'Engajamento Total', color: 'white' }
+            }
+          }
+        });
+
+      })
+      .catch(err => {
+        console.error("ERRO NO GRÁFICO:", err);
+      });
+  }
+
+function carregarPostsRecentes() {
+    fetch("/dashboard/posts-recentes")
+      .then(res => {
+          if (!res.ok) throw new Error("Erro na requisição");
+          return res.json();
+      })
+      .then(posts => {
+        const lista = document.querySelector(".lista-posts");
+        lista.innerHTML = "";
+
+        // Verificação de segurança: Só faz o forEach se 'posts' for uma lista
+        if (Array.isArray(posts)) {
+            posts.forEach(post => {
+              lista.innerHTML += `
+                <div class="post">
+                    <img src="/assets/uploads/${post.imagemPost}" width="40" style="border-radius:5px;">
+                    <div>
+                        <strong>${post.titulo}</strong> <small class="post-texto">${post.data_post}</small>
+                        <br>
+                        <span class="post-texto">${post.conteudo}</span>
+                    </div>
+                </div>
+              `;
+            });
+        } else {
+            lista.innerHTML = "Nenhum post encontrado.";
         }
-      },
-      scales: {
-        x: {
-          ticks: { color: 'white' },
-          grid: { color: 'rgba(255,255,255,0.1)' }
-        },
-        y: {
-          beginAtZero: true,
-          ticks: { color: 'white' },
-          grid: { color: 'rgba(255,255,255,0.1)' }
+      })
+      .catch(err => {
+          console.error("Erro ao carregar posts recentes:", err);
+          document.querySelector(".lista-posts").innerHTML = "Erro ao carregar dados.";
+      });
+}
+
+  function carregarPostMaisEngajado() {
+    fetch("/dashboard/post-mais-engajado")
+      .then(res => {
+        if (res.status === 204) {
+          document.getElementById("spanDestaque").innerText = "Nenhum post encontrado";
+          return null;
         }
-      }
-    }
-  });
+        return res.json();
+      })
+      .then(post => {
+
+        if (!post) return;
+
+        const spanDestaque = document.getElementById("spanDestaque");
+
+        spanDestaque.innerHTML = `
+                POST MAIS ENGAJADO: <br>
+                <strong>${post.titulo}</strong><br>
+                <small>${post.data}</small><br>
+                <span style="color:#b040d0; font-size:15px;">
+                   ${post.engajamento} interações -
+                    ★ ${post.n_curtidas} estrelas e ${post.n_comentarios} comentários
+                </span>
+            `;
+      })
+      .catch(err => {
+        console.error("Erro ao carregar post:", err);
+      });
+  }
 </script>

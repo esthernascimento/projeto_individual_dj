@@ -254,7 +254,7 @@ body {
 }
 
 .card-destaque span {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
   color: #111;
   letter-spacing: 1px;
@@ -267,15 +267,14 @@ body {
   border-radius: 12px;
   padding: 16px;
   flex: 1;
-  min-height: 0;
   display: flex;
   flex-direction: column;
 }
 
 .card-posts h3 {
-  font-size: 12px;
-  font-weight: 600;
-  color: #555;
+  font-size: 14px; 
+  font-weight: 700;
+  color: #333;
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-bottom: 12px;
@@ -284,32 +283,41 @@ body {
 .lista-posts {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  min-height: 0;
+  gap: 22px; /* Aumentado o espaço entre os posts */
 }
 
 .post {
-  background-color: #1a3d28;
+  background-color: #0a1f12; 
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 15px; 
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex: 1;
+  gap: 20px; 
 }
 
-.post-foto {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #7ecfa0, #1a3d28);
+.post img {
+  width: 150px !important; 
+  height: 100px !important; 
+  object-fit: cover; /* Não deixa a foto esticar feio */
+  border-radius: 8px;
   flex-shrink: 0;
 }
 
-.post-texto {
-  font-size: 14px;
-  font-style: italic;
-  color: rgba(255,255,255,0.7);
-  font-weight: 600;
+.post strong {
+  display: block;
+  font-size: 22px; 
+  color: #ffffff;  
+  margin-bottom: 4px;
+  text-transform: uppercase;
 }
+
+/* Estilo da Descrição */
+.post-texto {
+  font-size: 16px !important;
+  color: #bdc3c7;  
+  font-style: italic;
+  line-height: 1.4;
+}
+
+
+

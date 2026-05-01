@@ -45,10 +45,10 @@ function renderizarMeusPosts() {
                     </div>
                 `;
 
-                // 👉 adiciona no DOM primeiro
+                // adiciona no DOM primeiro
                 grade.appendChild(card);
 
-                // 👉 depois busca comentários (AGORA FUNCIONA)
+                // depois busca comentários (AGORA FUNCIONA)
                 setTimeout(() => {
                     buscarComentarios(post.idPost);
                 }, 0);
