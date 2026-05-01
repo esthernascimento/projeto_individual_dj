@@ -5,8 +5,15 @@ const upload = require("../config/upload");
 
 // Listar TODOS os posts (feed do usuário comum)
 router.get("/listar", function (req, res) {
+    const idUsuario = req.query.idUsuario; // Pegamos o ID de quem está vendo o feed
+
     const sql = `
-        SELECT p.*, u.nome 
+        SELECT 
+            p.*, 
+            u.nome,
+            (SELECT COUNT(*) FROM curtida WHERE fkPost = p.idPost) AS totalCurtidas,
+            -- Esta linha abaixo retorna 1 se você já curtiu, 0 se não.
+            (SELECT COUNT(*) FROM curtida WHERE fkPost = p.idPost AND fkUsuario = ${idUsuario}) AS jaCurtiu
         FROM post p
         JOIN usuario u ON p.fkAdmin = u.idUsuario
         ORDER BY p.dtPostagem DESC
@@ -22,7 +29,6 @@ router.get("/listar", function (req, res) {
 
 // Lista os posts do admin logado no feed da dash
 router.get("/meus", function (req, res) {
-    // Pegamos o ID que vem na URL: ?idUsuario=2
     const idAdmin = req.query.idUsuario; 
 
     if (!idAdmin) {
@@ -41,7 +47,6 @@ router.get("/meus", function (req, res) {
 
     database.executar(sql)
         .then(resultado => {
-            // Importante: Garantir que sempre retorne um array, mesmo vazio
             res.json(resultado || []); 
         })
         .catch(err => {
@@ -74,72 +79,104 @@ router.post("/publicar", upload.single("imagem"), function (req, res) {
 });
 
 // Listar comentários de um post 
-// Retorna só comentários aprovados (statusComentario = 1)
 router.get("/:id/comentarios", function (req, res) {
     const idPost = req.params.id;
-
     const sql = `
-        SELECT co.comentarioDescricao AS texto, u.nome AS autor, co.dtComentario
+        SELECT 
+            co.idComentario,
+            co.comentarioDescricao AS texto,
+            co.fkUsuario, 
+            u.nome AS autor,
+            co.dtComentario
         FROM comentario co
         JOIN usuario u ON co.fkUsuario = u.idUsuario
         WHERE co.fkPost = ${idPost}
           AND co.statusComentario = 1
         ORDER BY co.dtComentario ASC
     `;
-
     database.executar(sql)
         .then(resultado => res.json(resultado))
-        .catch(err => {
-            console.log("ERRO:", err);
-            res.status(500).send(err);
-        });
+        .catch(err => res.status(500).send(err));
 });
 
-// Enviar comentário 
+// Rota para Comentar 
 router.post("/:id/comentarios", function (req, res) {
     const idPost = req.params.id;
-    const { texto } = req.body;
-    const idUsuario = req.session?.usuario?.idUsuario;
+    let texto = req.body.texto;
+    let idUsuario = req.body.idUsuario;
 
     if (!idUsuario) {
-        return res.status(401).json({ erro: "Sessão expirada." });
+        return res.status(401).send("Usuário não identificado");
     }
 
-    if (!texto || texto.trim() === "") {
-        return res.status(400).json({ erro: "Comentário vazio." });
-    }
-
-    // statusComentario = 1 → aprovado direto
-    // Troque para 0 se quiser moderação antes de exibir
     const sql = `
         INSERT INTO comentario (fkUsuario, fkPost, comentarioDescricao, statusComentario)
-        VALUES (${idUsuario}, ${idPost}, '${texto.trim()}', 1)
+        VALUES (${idUsuario}, ${idPost}, '${texto}', 1)
     `;
 
     database.executar(sql)
         .then(() => res.sendStatus(200))
         .catch(err => {
-            console.log("ERRO:", err);
+            console.log("Erro ao comentar:", err);
             res.status(500).send(err);
         });
 });
 
-// Curtir / descurtir post 
+// Rota para Curtir 
 router.post("/:id/curtir", function (req, res) {
     const idPost = req.params.id;
-    const idUsuario = req.session?.usuario?.idUsuario;
-    const { curtir } = req.body; // true = curtir, false = descurtir
+    let curtir = req.body.curtir;
+    let idUsuario = req.body.idUsuario;
 
     if (!idUsuario) {
-        return res.status(401).json({ erro: "Sessão expirada." });
+        return res.status(401).send("Usuário não identificado");
     }
 
-    // INSERT IGNORE respeita a chave composta, pro usuario não duplicar curtidaaa
     const sql = curtir
         ? `INSERT IGNORE INTO curtida (fkUsuario, fkPost) VALUES (${idUsuario}, ${idPost})`
         : `DELETE FROM curtida WHERE fkUsuario = ${idUsuario} AND fkPost = ${idPost}`;
 
     database.executar(sql)
+        .then(() => res.sendStatus(200))
+        .catch(err => {
+            console.log("Erro ao curtir:", err);
+            res.status(500).send(err);
+        });
+});
+
+// apagar comentario
+router.delete("/comentarios/:id", function (req, res) {
+    const idComentario = req.params.id;
+    const { idUsuario, tipoUsuario } = req.body;
+
+    if (!idUsuario) {
+        return res.status(401).send("Usuário não identificado");
+    }
+
+    const sql = tipoUsuario === "Administrador"
+        ? `DELETE FROM comentario WHERE idComentario = ${idComentario}`
+        : `DELETE FROM comentario WHERE idComentario = ${idComentario} AND fkUsuario = ${idUsuario}`;
+
+    database.executar(sql)
+        .then(() => res.sendStatus(200))
+        .catch(err => {
+            console.log("Erro ao deletar:", err);
+            res.status(500).send(err);
+        });
+});
+
+// Rota pra apagar post 
+router.delete("/:id", function (req, res) {
+    const idPost = req.params.id;
+    const idUsuario = req.query.idUsuario;
+
+    const sql1 = `DELETE FROM comentario WHERE fkPost = ${idPost}`;
+    const sql2 = `DELETE FROM curtida WHERE fkPost = ${idPost}`;
+    const sql3 = `DELETE FROM post WHERE idPost = ${idPost} AND fkAdmin = ${idUsuario}`;
+
+    database.executar(sql1)
+        .then(() => database.executar(sql2))
+        .then(() => database.executar(sql3))
         .then(() => res.sendStatus(200))
         .catch(err => {
             console.log("ERRO:", err);

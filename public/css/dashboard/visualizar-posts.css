@@ -17,7 +17,7 @@
 }
 
 .card-post {
-        display: flex;
+    display: flex;
     flex-direction: column;
     height: 100%; 
     background: #0a1f12; 
@@ -61,6 +61,63 @@
     font-size: 0.85rem;
 }
 
+/* Ajuste para a imagem principal do post */
+.card-post > img { 
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+/*  Estilo para o botão de apagar */
+.rodape-card button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    color: #ff4d4d; 
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: 0.3s;
+    margin-left: auto;
+}
+
+.rodape-card button:hover {
+    opacity: 0.7;
+}
+
+.img-lixo {
+    width: 18px !important;  
+    height: 18px !important; 
+    object-fit: contain !important; 
+}
+
+.img-lixo {
+    width: 18px;
+    cursor: pointer;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+/* Classe para todos os ícones pequenos (Estrela, Comentário, Lixeira) */
+.img-icone, .img-lixo {
+    width: 18px !important;
+    height: 18px !important;
+    object-fit: contain !important;
+    vertical-align: middle; /* Alinha o ícone com o texto ao lado */
+    margin-right: 5px;    
+}
+
+/* Ajuste no span para os itens ficarem alinhados */
+.rodape-card span {
+    display: flex;
+    align-items: center;
+}
+
 /* Seção de Comentários  */
 .lista-comentarios {
     background: #0d2617;
@@ -70,12 +127,15 @@
     overflow-y: auto;
 }
 
-.item-comentario {
-    font-size: 0.8rem;
-    padding: 5px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+.lista-comentarios {
+    margin-top: 10px;
 }
 
-.item-comentario strong {
-    color: #2ecc71;
+.item-comentario {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: white;
 }

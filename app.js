@@ -29,6 +29,11 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/posts", postsRouter);
 
+app.use((req, res, next) => {
+  console.log("BODY RECEBIDO:", req.body);
+  next();
+});
+
 app.listen(PORTA_APP, function () {
     console.log(`
     ##   ##  ######   #####             ####       ##     ######     ##              ##  ##    ####    ######  

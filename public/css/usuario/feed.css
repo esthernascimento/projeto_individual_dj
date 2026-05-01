@@ -59,6 +59,21 @@ small{
     line-height: 1.5;
 }
 
+.container-posts {
+    margin: 150px auto;
+}
+
+.img-icone {
+    width: 18px !important;
+    height: 18px !important;
+    object-fit: contain !important;
+    vertical-align: middle; /* Alinha o ícone com o texto ao lado */
+    margin-right: 5px;    
+}
+button .botao-acao{
+    gap: 5px;
+}
+
 /* Botões e Ações */
 .acoes-post {
     padding: 14px;
