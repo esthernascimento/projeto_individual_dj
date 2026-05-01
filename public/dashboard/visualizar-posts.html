@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SET DOS DJs | Dashboard</title>
+
+    <link rel="icon" href="../assets/imgs/thee/dj-icon.png">
+    <link rel="stylesheet" href="../css/dashboard/dashboad-adm.css">
+    <link rel="stylesheet" href="../css/dashboard/visualizar-posts.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <aside class="barra-lateral">
+        <div style="height: 50px;"></div>
+
+        <a href="../dashboard/dashboard-adm.html" class="botao-menu">
+            <img src="../assets/icon/dash-icon.png" alt="dash">
+            DASH
+        </a>
+
+        <a href="../dashboard/perfil-adm.html" class="botao-menu">
+            <img src="../assets/icon/perfil-icon.png" alt="perfil">
+            PERFIL
+        </a>
+
+        <a href="../dashboard/visualizar-posts.html" class="botao-menu ativo">
+            <img src="../assets/icon/posts-icon.png" alt="posts">
+            POSTS
+        </a>
+
+        <div class="logout-container">
+            <button class="botao-menu logout" onclick="limparSessao()">SAIR</button>
+        </div>
+    </aside>
+
+    <main class="area-principal">
+        <div class="topo">
+            <div class="titulo">
+                <h1>POSTS PUBLICADOS</h1>
+                <h2>RESULTADO DO FEED ESTRELA</h2>
+            </div>
+            <div class="topo-direito">
+                <div class="logo-topo">
+                    <img src="../assets/imgs/thee/set-estrela.png" alt="Set dos DJs">
+                </div>
+            </div>
+        </div>
+
+        <div class="container-posts">
+            <div id="grade-posts" class="grade-posts">
+
+            </div>
+    </main>
+
+    <script src="../js/sessao.js"></script>
+    <script src="../js/dashboard/feed.js"></script>
+    <script>
+        window.onload = function () {
+            validarSessao();
+            renderizarMeusPosts();
+        };
+    </script>
+
+</body>
+
+</html>

@@ -26,6 +26,12 @@
       <img src="../assets/icon/perfil-icon.png" alt="perfil">
       PERFIL
     </a>
+
+    <a href="../dashboard/visualizar-posts.html" class="botao-menu">
+      <img src="../assets/icon/posts-icon.png" alt="perfil">
+      POSTS
+    </a>
+
     <div class="logout-container">
         <button class="botao-menu logout" onclick="limparSessao()">SAIR</button>
     </div>
@@ -115,7 +121,11 @@
 
 <script src="../js/sessao.js"></script>
 <script>
-  // Preferências do Quiz (Ex: DJs favoritos ou Gêneros)
+  window.onload = function () {
+        validarSessao();
+    };
+    
+  // Preferências do cadastro (Ex: DJs favoritos ou Gêneros)
   new Chart(document.getElementById('grafico-rosca'), {
     type: 'doughnut',
     data: {

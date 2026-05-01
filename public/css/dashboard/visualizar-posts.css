@@ -1,0 +1,81 @@
+.area-principal {
+    flex: 1;  /* Faz ocupar o resto da tela */
+    height: 100vh;     
+    overflow-y: auto;        
+    padding: 40px;
+    background-color: #051109; 
+}
+
+
+.grade-posts {
+    display: grid;
+    /* Força exatamente 3 colunas de tamanhos iguais */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.card-post {
+        display: flex;
+    flex-direction: column;
+    height: 100%; 
+    background: #0a1f12; 
+    border-radius: 15px;
+    border: 1px solid #153b22;
+    overflow: hidden;
+    color: white;
+    transition: 0.3s;
+}
+
+.card-post img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.corpo-post {
+    padding: 15px;
+}
+
+.titulo-post {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #2ecc71; 
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.descricao-post {
+    font-size: 0.9rem;
+    color: #bdc3c7;
+    margin-bottom: 15px;
+}
+
+/* Rodapé do Card */
+.rodape-card {
+    display: flex;
+    gap: 15px;
+    padding: 10px 15px;
+    background: rgba(0,0,0,0.3);
+    font-size: 0.85rem;
+}
+
+/* Seção de Comentários  */
+.lista-comentarios {
+    background: #0d2617;
+    padding: 10px 15px;
+    border-top: 1px solid #153b22;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.item-comentario {
+    font-size: 0.8rem;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.item-comentario strong {
+    color: #2ecc71;
+}

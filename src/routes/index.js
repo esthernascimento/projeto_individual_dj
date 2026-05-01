@@ -42,4 +42,8 @@ router.get("/criar-post", function (req, res) {
     res.sendFile(path.resolve(__dirname, "../../public/dashboard/criar-post.html"));
 });
 
+router.get("/visualizar-posts", function (req, res) {
+    res.sendFile(path.resolve(__dirname, "../../public/dashboard/visualizar-posts.html"));
+});
+
 module.exports = router;
