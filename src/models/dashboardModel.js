@@ -1,7 +1,7 @@
-const database = require("../database/config");
+var database = require("../database/config");
 
 function numeros() {
-    const sql = `
+    var sql = `
         SELECT 
             (SELECT COUNT(*) FROM usuario) AS totalUsuarios,
             (SELECT COUNT(*) FROM curtida) AS totalCurtidas
@@ -10,7 +10,7 @@ function numeros() {
 }
 
 function generos() {
-    const sql = `
+    var sql = `
         SELECT estiloMusical, COUNT(*) as total
         FROM usuario
         WHERE estiloMusical IS NOT NULL
@@ -20,7 +20,7 @@ function generos() {
 }
 
 function crescimento() {
-    const sql = `
+    var sql = `
         SELECT 
             MONTH(dtCadastro) AS mes,
             COUNT(*) AS usuarios
@@ -31,7 +31,7 @@ function crescimento() {
 }
 
 function postsRecentes() {
-    const sql = `
+    var sql = `
         SELECT 
             titulo, 
             conteudo, 
@@ -45,7 +45,7 @@ function postsRecentes() {
 }
 
 function interacoes() {
-    const sql = `
+    var sql = `
         SELECT 
             (SELECT COUNT(*) FROM curtida) AS curtidas,
             (SELECT COUNT(*) FROM comentario) AS comentarios
@@ -54,7 +54,7 @@ function interacoes() {
 }
 
 function postMaisEngajado() {
-    const sql = `
+    var sql = `
         SELECT 
             p.idPost,
             p.titulo,
