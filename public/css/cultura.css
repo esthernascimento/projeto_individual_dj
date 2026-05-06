@@ -25,6 +25,11 @@ body {
   margin-bottom: 10px;
 }
 
+.titulo-principal img{
+  width: 900px;
+  height: auto;
+}
+
 .titulo-principal h3 {
   font-size: 20px;
   font-weight: 400;

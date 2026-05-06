@@ -12,9 +12,10 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
+
 router.get("/email/:email", usuarioController.buscarUsuarioPeloEmail);
-router.get("/:idUsuario",   usuarioController.buscarUsuarioPeloId);
-// router.put("/:idUsuario", usuarioController.atualizar); 
-router.put("/:idUsuario", upload.single('fotoPerfil'), usuarioController.atualizar);
+router.get("/:idUsuario", usuarioController.buscarUsuarioPeloId);
+
+router.put("/:idUsuario", upload.single("fotoPerfil"), usuarioController.atualizar);
 
 module.exports = router;

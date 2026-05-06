@@ -34,15 +34,12 @@ body {
   max-width: 450px;
 }
 
-.titulo-cadastro {
-  font-size: 50px;
-  font-weight: 800;
-  justify-self: center;
-  color: #ffffff;
-  letter-spacing: 4px;
-  margin-bottom: 30px;
-  font-family: 'Courier New', Courier, monospace;
+.form-area .titulo-cadastro{
+  width: 450px !important;
+  height: auto !important;
+  gap: 30px;
 }
+
 
 .formulario {
   display: flex;

@@ -35,14 +35,10 @@ body {
 }
 
 /* Título */
-.titulo-login {
-  font-size: 64px;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: 6px;
-  margin-bottom: 50px;
-  font-family: 'Courier New', Courier, monospace;
-  text-transform: uppercase;
+.form-area img {
+  width: 450px !important;
+  height: auto !important;
+  gap: 30px;
 }
 
 /* Formulário */

@@ -37,15 +37,17 @@ function buscarUsuarioPeloEmail(email) {
 }
 
 function atualizar(id, nome, email, senha, imagem) {
-    var setSenha = senha ? `, senha='${senha}'` : "";
-    var setImagem = imagem ? `, imagemUsuario='${imagem}'` : "";
+    let setSenha = senha ? `, senha='${senha}'` : "";
+    let setImagem = imagem ? `, imagemUsuario='${imagem}'` : "";
 
-    var instrucaoSql = `
+    const sql = `
         UPDATE usuario 
         SET nome='${nome}', email='${email}'${setSenha}${setImagem}
         WHERE idUsuario=${id};
     `;
-    return database.executar(instrucaoSql);
+    console.log("SQL:", sql);
+
+    return database.executar(sql);
 }
 
 module.exports = {

@@ -31,7 +31,7 @@
       POSTS
     </a>
     <div class="logout-container">
-        <button class="botao-menu logout" onclick="limparSessao()">SAIR</button>
+      <button class="botao-menu logout" onclick="limparSessao()">SAIR</button>
     </div>
   </aside>
 
@@ -58,7 +58,7 @@
                 <img src="../assets/icon/cursor-icon.png" alt="Editar">
               </div>
             </label>
-            <input type="file" id="imagem_input" style="display: none;" accept="image/*"
+            <input type="file" id="imagem_input" name="fotoPerfil" style="display: none;" accept="image/*"
               onchange="exibirPreview(event)">
           </div>
         </div>
@@ -97,61 +97,65 @@
       leitor.readAsDataURL(event.target.files[0]);
     }
   }
-  
-function carregarPerfil() {
-  var email = sessionStorage.getItem("EMAIL_USUARIO");
-  if (!email) return;
 
-  // encodeURIComponent resolve o @ e outros caracteres especiais na URL
-  fetch("/usuarios/email/" + encodeURIComponent(email))
-    .then(res => res.json())
-    .then(function (dados) {
-      var u = dados[0];
+  function carregarPerfil() {
+    var email = sessionStorage.getItem("EMAIL_USUARIO");
+    if (!email) return;
 
-      document.getElementById("nome_input").value= u.nome || "";
-      document.getElementById("email_input").value = u.email || "";
-      document.getElementById("estilo_input").value = u.estiloMusical || "";
-      document.getElementById("tipo_input").value = u.tipoUser || "";
+    // encodeURIComponent resolve o @ e outros caracteres especiais na URL
+    fetch("/usuarios/email/" + encodeURIComponent(email))
+      .then(res => res.json())
+      .then(function (dados) {
+        var u = dados[0];
 
-      if (u.dtNasc) {
-        document.getElementById("dtnasc_input").value = u.dtNasc.substring(0, 10);
-      }
+        document.getElementById("nome_input").value = u.nome || "";
+        document.getElementById("email_input").value = u.email || "";
+        document.getElementById("estilo_input").value = u.estiloMusical || "";
+        document.getElementById("tipo_input").value = u.tipoUser || "";
 
-      if (u.imagemUsuario) {
-        document.getElementById("foto_perfil").src = "/assets/uploads/" + u.imagemUsuario;
-      }
-    })
-    .catch(err => console.error("Erro:", err));
-}
+        if (u.dtNasc) {
+          document.getElementById("dtnasc_input").value = u.dtNasc.substring(0, 10);
+        }
+
+        if (u.imagemUsuario) {
+          document.getElementById("foto_perfil").src = "/assets/uploads/" + u.imagemUsuario;
+        }
+      })
+      .catch(err => console.error("Erro:", err));
+  }
 
   function atualizarPerfil() {
     var id = sessionStorage.getItem("ID_USUARIO");
+
     var nome = document.getElementById("nome_input").value.trim();
     var email = document.getElementById("email_input").value.trim();
     var senha = document.getElementById("senha_input").value.trim();
+    var imagem = document.getElementById("imagem_input").files[0];
 
     if (!nome || !email) {
       alert("Nome e email são obrigatórios!");
       return;
     }
 
-    var corpo = { nome: nome, email: email };
-    if (senha) corpo.senha = senha;
+    var formData = new FormData();
+    formData.append("nome", nome);
+    formData.append("email", email);
+
+    if (senha) formData.append("senha", senha);
+    if (imagem) formData.append("fotoPerfil", imagem); 
 
     fetch("/usuarios/" + id, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(corpo)
+      body: formData
     })
-      .then(function (res) {
+      .then(res => {
         if (res.ok) {
-          alert("Perfil atualizado com sucesso!");
-          sessionStorage.setItem("NOME_USUARIO", nome);
-          sessionStorage.setItem("EMAIL_USUARIO", email);
+          alert("Perfil atualizado!");
+          carregarPerfil(); // recarrega dados + foto do usuáriooo
         } else {
-          alert("Erro ao salvar. Tente novamente.");
+          alert("Erro ao atualizar");
         }
       })
-      .catch(err => console.error("Erro:", err));
+      .catch(err => console.error(err));
   }
 </script>

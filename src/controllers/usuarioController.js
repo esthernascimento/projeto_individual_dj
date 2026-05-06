@@ -62,15 +62,21 @@ function buscarUsuarioPeloEmail(req, res) {
 }
 
 function atualizar(req, res) {
-    var id = req.params.idUsuario;
-    var nome = req.body.nome;
-    var email = req.body.email;
-    var senha = req.body.senha;
-    var imagem = req.file ? req.file.filename : null;
+    const id = req.params.idUsuario;
+    const nome = req.body.nome;
+    const email = req.body.email;
+    const senha = req.body.senha;
+
+    const imagem = req.file ? req.file.filename : null;
+
+    console.log("IMAGEM RECEBIDA:", imagem); // debug
 
     usuarioModel.atualizar(id, nome, email, senha, imagem)
-        .then(resultado => res.json(resultado))
-        .catch(err => res.status(500).json(err.sqlMessage));
+        .then(() => res.sendStatus(200))
+        .catch(err => {
+            console.log(err);
+            res.status(500).send(err);
+        });
 }
 
 module.exports = {
