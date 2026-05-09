@@ -36,7 +36,6 @@ body{
 .header a{
   text-decoration: none;
   color: #ffffff;
-
   font-size: 25px;
 }
 
@@ -54,7 +53,8 @@ body{
 }
 
 .logo-header{
-  width: 350px;
+  margin-top: 10px ;
+  width: 290px;
 }
 
 .navbar{
