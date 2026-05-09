@@ -156,5 +156,24 @@ body {
   color: #7ecfa0;
 }
 
-.alerta_erro { position: fixed; top: 100px; left: 50%; transform: translateX(-50%); z-index: 1000; }
-.card_erro { background: #ff4d4d; color: white; padding: 10px 20px; border-radius: 8px; display: none; }
+.alerta_erro {
+  position: fixed;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+  width: 90%;
+  max-width: 500px;
+}
+
+.card_erro {
+  display: none; 
+  background-color: #153b22; 
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  border: 2px solid transparent; 
+}

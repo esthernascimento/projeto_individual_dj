@@ -37,7 +37,7 @@
 
     <div class="container-cadastro">
       <div class="form-area">
-        <img  class="titulo-cadastro" src="./assets/imgs/titulos/titulo-cadastro.png" alt="">
+        <img class="titulo-cadastro" src="./assets/imgs/titulos/titulo-cadastro.png" alt="">
         <div class="formulario">
           <div class="preview-container">
             <label for="ipt_img_usuario">
@@ -96,9 +96,20 @@
 
             <option value="Outro">Outro</option>
           </select>
+          <input id="senha_input" type="password" placeholder="Senha: ******" oninput="validarSenha()" />
 
-          <input id="senha_input" type="password" placeholder="Senha: ******" />
-          <input id="confirmacao_senha_input" type="password" placeholder="Confirmar senha: ******" />
+          <div id="validacao_resumo" style="font-size: 13px; margin-top: 5px; text-align: left;">
+            <span id="msg_tamanho" style="color: #808080;">✖ 8+ caracteres</span><br>
+            <span id="msg_maiuscula" style="color: #808080;">✖ Uma letra maiúscula</span><br>
+            <span id="msg_minuscula" style="color: #808080;">✖ Uma letra minúscula</span><br>
+            <span id="msg_especial" style="color: #808080;">✖ Um caractere especial</span>
+          </div>
+
+          <input id="confirmacao_senha_input" type="password" placeholder="Confirmar senha: ******"
+            oninput="validarSenha()" />
+          <div id="msg_coincide" style="font-size: 13px; color: #808080;"></div>
+
+
 
           <button class="botao" onclick="cadastrar()">CADASTRAR</button>
 
@@ -132,82 +143,170 @@
     </div>
   </footer>
 </body>
+</html>
 
 <script>
-  function cadastrar() {
-  const nomeVar = nome_input.value;
-  const dtNascVar = dtNasc_input.value;
-  const emailVar = email_input.value;
-  const senhaVar = senha_input.value;
-  const confirmacaoVar = confirmacao_senha_input.value;
-  const foto = document.getElementById('ipt_img_usuario');
-  const estiloVar = estiloMusical_input.value;
+  function validarSenha(){
+    let senha = senha_input.value;
+    let confirmacao = confirmacao_senha_input.value;
 
-  let campos = [nomeVar, dtNascVar, emailVar, senhaVar, confirmacaoVar];
+    let temTamanho = senha.length >= 8;
+    let temMaiuscula = senha != senha.toLowerCase();
+    let temMinuscula = senha != senha.toUpperCase();
+    
+    let especial = ['!', '@', '#', '$', '%', '&', '*', '~', ';', '.', ',', '/', '+', '-', '=', '|'];
+    let temEspecial = false;
 
-  for (let i = 0; i < campos.length; i++) {
-    if (campos[i] == "") {
-      alert("Por favor, preencha todos os campos.");
-      return false;
+    for (let i = 0; i < especial.length; i++){
+      if (senha.includes(especial[i])) {
+        temEspecial = true;
+      }
+    }
+
+    if (temTamanho){
+      msg_tamanho.innerHTML = "✔ 8+ caracteres";
+      msg_tamanho.style.color = "#32CD32";
+    } else {
+      msg_tamanho.innerHTML = "✖ 8+ caracteres";
+      msg_tamanho.style.color = "#FF6347";
+    }
+
+    if (temMaiuscula){
+      msg_maiuscula.innerHTML = "✔ Uma letra maiúscula";
+      msg_maiuscula.style.color = "#32CD32";
+    } else {
+      msg_maiuscula.innerHTML = "✖ Uma letra maiúscula";
+      msg_maiuscula.style.color = "#FF6347";
+    }
+
+    if (temMinuscula){
+      msg_minuscula.innerHTML = "✔ Uma letra minúscula";
+      msg_minuscula.style.color = "#32CD32";
+    } else {
+      msg_minuscula.innerHTML = "✖ Uma letra minúscula";
+      msg_minuscula.style.color = "#FF6347";
+    }
+
+    if (temEspecial){
+      msg_especial.innerHTML = "✔ Um caractere especial";
+      msg_especial.style.color = "#32CD32";
+    } else {
+      msg_especial.innerHTML = "✖ Um caractere especial";
+      msg_especial.style.color = "#FF6347";
+    }
+
+    if (senha == confirmacao && confirmacao.length > 0){
+      msg_coincide.innerHTML = "✔ As senhas coincidem";
+      msg_coincide.style.color = "#32CD32";
+    } else if (confirmacao.length > 0){
+      msg_coincide.innerHTML = "✖ As senhas não coincidem";
+      msg_coincide.style.color = "#FF6347";
+    } else {
+      msg_coincide.innerHTML = "";
     }
   }
 
-  if (senhaVar !== confirmacaoVar) {
-    alert("As senhas não coincidem!");
-    return false;
-  }
+  function cadastrar(){
+    let nomeVar = nome_input.value;
+    let dtNascVar = dtNasc_input.value;
+    let emailVar = email_input.value;
+    let senhaVar = senha_input.value;
+    let confirmacaoVar = confirmacao_senha_input.value;
+    let estiloVar = estiloMusical_input.value;
+    let foto = document.getElementById('ipt_img_usuario');
 
-  if (foto.files.length == 0) {
-    alert("Por favor, selecione uma foto de perfil.");
-    return false;
-  }
+    if (nomeVar == "" || dtNascVar == "" || emailVar == "" || senhaVar == "" || confirmacaoVar == "" || estiloVar == ""){
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "Preencha todos os campos para prosseguir.";
+      setInterval(sumirMensagem, 5000);
+      return false;
+    }
 
-  if (estiloVar == "") {
-    alert("Por favor, selecione seu estilo musical.");
-    return false;
-  }
+    if (!emailVar.includes('@') || !emailVar.includes('.')){
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "E-mail inválido! Deve conter '@' e '.'";
+      setInterval(sumirMensagem, 5000);
+      return false;
+    }
 
-  const formData = new FormData();
-  formData.append("nomeServer", nomeVar);
-  formData.append("dtNascServer", dtNascVar);
-  formData.append("emailServer", emailVar);
-  formData.append("senhaServer", senhaVar);
-  formData.append("estiloServer", estiloVar);
-  formData.append("fotoPerfil", foto.files[0]);
-
-  fetch("/usuarios/cadastrar", {
-    method: "POST",
-    body: formData
-  })
-    .then(resposta => {
-      if (resposta.ok) {
-        alert("Cadastro realizado com sucesso! Redirecionando para o login...");
-        window.location = "login.html";
-      } else {
-        alert("Erro ao realizar o cadastro. Verifique os dados ou se o e-mail já existe.");
+    let especial = ['!', '@', '#', '$', '%', '&', '*', '~', ';', '.', ',', '/', '+', '-', '=', '|'];
+    let temEspecial = false;
+    for (let i = 0; i < especial.length; i++) {
+      if (senhaVar.includes(especial[i])){ 
+        temEspecial = true; 
       }
+    }
+
+    let temMaiuscula = senhaVar != senhaVar.toLowerCase();
+    let temMinuscula = senhaVar != senhaVar.toUpperCase();
+
+    if (senhaVar.length < 8 || !temMaiuscula || !temMinuscula || !temEspecial) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "A senha não atende aos requisitos de segurança.";
+      setInterval(sumirMensagem, 5000);
+      return false;
+    }
+
+    if (senhaVar != confirmacaoVar){
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "As senhas não coincidem!";
+      setInterval(sumirMensagem, 5000);
+      return false;
+    }
+
+    //Envio
+    let formData = new FormData();
+    formData.append("nomeServer", nomeVar);
+    formData.append("dtNascServer", dtNascVar);
+    formData.append("emailServer", emailVar);
+    formData.append("senhaServer", senhaVar);
+    formData.append("estiloServer", estiloVar);
+
+    if (foto.files.length > 0){
+      formData.append("fotoPerfil", foto.files[0]);
+    }
+
+ fetch("/usuarios/cadastrar", {
+      method: "POST",
+      body: formData
     })
-    .catch(erro => {
-      console.error(`#ERRO: ${erro}`);
-    });
+      .then(resposta => {
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+          cardErro.style.backgroundColor = "#32CD32"; 
+          mensagem_erro.innerHTML = "✔ Cadastro realizado com sucesso! Redirecionando...";
+          
+          setTimeout(() => {
+            window.location = "login.html";
+          }, 2000);
 
-  return false;
-}
+        } else {
+          cardErro.style.display = "block";
+          cardErro.style.backgroundColor = "#FF6347";
+          mensagem_erro.innerHTML = "Erro ao realizar o cadastro. Verifique os dados.";
+          
+          setTimeout(sumirMensagem, 5000);
+        }
+      })
+      .catch(erro => {
+        console.error(`#ERRO: ${erro}`);
+      });
 
-  function exibirPreview(event) {
-    const input = event.target;
-    const preview = document.getElementById('img_preview');
+    return false;
+  }
 
+  function exibirPreview(event){
+    let input = event.target;
+    let preview = document.getElementById('img_preview');
     if (input.files && input.files[0]) {
-      const leitor = new FileReader();
-
-      leitor.onload = function (e) {
-        preview.src = e.target.result;
-      };
-
+      let leitor = new FileReader();
+      leitor.onload = function (e) { preview.src = e.target.result; };
       leitor.readAsDataURL(input.files[0]);
     }
   }
-</script>
 
-</html>
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
+</script>

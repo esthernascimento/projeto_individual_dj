@@ -70,7 +70,6 @@
       </div-links>
     </div>
   </div>
-
 </body>
 
 </html>
@@ -78,9 +77,9 @@
 
 <script src="../js/sessao.js"></script>
 <script>
-  function entrar() {
-    var emailVar = email_input.value;
-    var senhaVar = senha_input.value;
+  function entrar(){
+    let emailVar = email_input.value;
+    let senhaVar = senha_input.value;
 
     if (emailVar == "" || senhaVar == "") {
       cardErro.style.display = "block";
@@ -99,23 +98,16 @@
       })
     })
       .then(function (resposta) {
-        if (resposta.ok) {
+        if (resposta.ok){
           resposta.json().then(function (json) {
-            // salva TUDO na sessão agora - pra mim conseguir puxar no perfil do usuário
-            sessionStorage.setItem("ID_USUARIO", json.idUsuario);
-            sessionStorage.setItem("NOME_USUARIO", json.nome);
-            sessionStorage.setItem("EMAIL_USUARIO", json.email);
-            sessionStorage.setItem("TIPO_USUARIO", json.tipoUser);
-            sessionStorage.setItem("FOTO_USUARIO", json.imagemUsuario || "");
-            sessionStorage.setItem("ESTILO_USUARIO", json.estiloMusical || "");
+            sessionStorage.ID_USUARIO = json.idUsuario;
+            sessionStorage.NOME_USUARIO = json.nome;
+            sessionStorage.EMAIL_USUARIO = json.email;
+            sessionStorage.TIPO_USUARIO = json.tipoUser;
+            sessionStorage.FOTO_USUARIO = json.imagemUsuario || "";
+            sessionStorage.ESTILO_USUARIO = json.estiloMusical || "";
 
-            console.log("SESSÃO SALVA");
-            console.log("ID:", sessionStorage.getItem("ID_USUARIO"));
-            console.log("NOME:", sessionStorage.getItem("NOME_USUARIO"));
-            console.log("EMAIL:", sessionStorage.getItem("EMAIL_USUARIO"));
-            console.log("TIPO:", sessionStorage.getItem("TIPO_USUARIO"));
-            console.log("FOTO:", sessionStorage.getItem("FOTO_USUARIO"));
-            console.log("ESTILO:", sessionStorage.getItem("ESTILO_USUARIO"));
+            console.log("SESSÃO SALVA COM SUCESSO");
 
             setTimeout(function () {
               if (json.tipoUser == "Administrador") {
@@ -131,7 +123,7 @@
         }
       })
       .catch(function (erro) {
-        console.log(erro);
+        console.log("Erro na autenticação:", erro);
       });
 
     return false;
@@ -140,5 +132,4 @@
   function sumirMensagem() {
     cardErro.style.display = "none";
   }
-
 </script>
