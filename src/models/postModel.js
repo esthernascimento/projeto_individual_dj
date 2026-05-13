@@ -1,7 +1,7 @@
-const database = require("../database/config");
+let database = require("../database/config");
 
 function listar(idUsuario) {
-    const sql = `
+    let sql = `
         SELECT 
             p.*, 
             u.nome,
@@ -15,7 +15,7 @@ function listar(idUsuario) {
 }
 
 function listarMeus(idAdmin) {
-    const sql = `
+    let sql = `
         SELECT p.*, u.nome,
             (SELECT COUNT(*) FROM curtida WHERE fkPost = p.idPost) AS totalCurtidas,
             (SELECT COUNT(*) FROM comentario WHERE fkPost = p.idPost) AS totalComentarios
@@ -28,7 +28,7 @@ function listarMeus(idAdmin) {
 }
 
 function publicar(titulo, conteudo, imagem, fkAdmin) {
-    const sql = `
+    let sql = `
         INSERT INTO post (titulo, conteudo, imagemPost, fkAdmin)
         VALUES ('${titulo}', '${conteudo}', '${imagem}', ${fkAdmin})
     `;
@@ -36,7 +36,7 @@ function publicar(titulo, conteudo, imagem, fkAdmin) {
 }
 
 function listarComentarios(idPost) {
-    const sql = `
+    let sql = `
         SELECT 
             co.idComentario,
             co.comentarioDescricao AS texto,
@@ -53,7 +53,7 @@ function listarComentarios(idPost) {
 }
 
 function comentar(idUsuario, idPost, texto) {
-    const sql = `
+    let sql = `
         INSERT INTO comentario (fkUsuario, fkPost, comentarioDescricao, statusComentario)
         VALUES (${idUsuario}, ${idPost}, '${texto}', 1)
     `;
@@ -61,7 +61,7 @@ function comentar(idUsuario, idPost, texto) {
 }
 
 function curtir(idUsuario, idPost, curtir) {
-    const sql = curtir
+    let sql = curtir
         ? `INSERT IGNORE INTO curtida (fkUsuario, fkPost) VALUES (${idUsuario}, ${idPost})`
         : `DELETE FROM curtida WHERE fkUsuario = ${idUsuario} AND fkPost = ${idPost}`;
     
@@ -69,7 +69,7 @@ function curtir(idUsuario, idPost, curtir) {
 }
 
 function deletarComentario(idComentario, idUsuario, tipoUsuario) {
-    const sql = tipoUsuario === "Administrador"
+    let sql = tipoUsuario === "Administrador"
         ? `DELETE FROM comentario WHERE idComentario = ${idComentario}`
         : `DELETE FROM comentario WHERE idComentario = ${idComentario} AND fkUsuario = ${idUsuario}`;
 
@@ -77,9 +77,9 @@ function deletarComentario(idComentario, idUsuario, tipoUsuario) {
 }
 
 function deletarPost(idPost, idUsuario) {
-    const sql1 = `DELETE FROM comentario WHERE fkPost = ${idPost}`;
-    const sql2 = `DELETE FROM curtida WHERE fkPost = ${idPost}`;
-    const sql3 = `DELETE FROM post WHERE idPost = ${idPost} AND fkAdmin = ${idUsuario}`;
+    let sql1 = `DELETE FROM comentario WHERE fkPost = ${idPost}`;
+    let sql2 = `DELETE FROM curtida WHERE fkPost = ${idPost}`;
+    let sql3 = `DELETE FROM post WHERE idPost = ${idPost} AND fkAdmin = ${idUsuario}`;
 
     return database.executar(sql1)
         .then(() => database.executar(sql2))

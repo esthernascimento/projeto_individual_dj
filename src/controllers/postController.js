@@ -1,7 +1,7 @@
-var postModel = require("../models/postModel");
+let postModel = require("../models/postModel");
 
 function listar(req, res) {
-    var idUsuario = req.query.idUsuario;
+    let idUsuario = req.query.idUsuario;
 
     postModel.listar(idUsuario)
         .then(function (r) { res.json(r); })
@@ -9,7 +9,7 @@ function listar(req, res) {
 }
 
 function listarMeus(req, res) {
-    var idAdmin = req.query.idUsuario;
+    let idAdmin = req.query.idUsuario;
 
     if (!idAdmin) return res.status(400).send("ID não fornecido");
 
@@ -19,15 +19,15 @@ function listarMeus(req, res) {
 }
 
 function publicar(req, res) {
-    var titulo = req.body.titulo;
-    var conteudo = req.body.conteudo;
-    var fkAdmin = req.body.fkAdmin;
+    let titulo = req.body.titulo;
+    let conteudo = req.body.conteudo;
+    let fkAdmin = req.body.fkAdmin;
 
     if (!req.file) {
         return res.status(400).send("Imagem não enviada");
     }
 
-    var imagem = req.file.filename;
+    let imagem = req.file.filename;
 
     postModel.publicar(titulo, conteudo, imagem, fkAdmin)
         .then(function () { res.sendStatus(200); })
@@ -38,7 +38,7 @@ function publicar(req, res) {
 }
 
 function listarComentarios(req, res) {
-    var idPost = req.params.id;
+    let idPost = req.params.id;
 
     postModel.listarComentarios(idPost)
         .then(function (r) { res.json(r); })
@@ -46,9 +46,9 @@ function listarComentarios(req, res) {
 }
 
 function comentar(req, res) {
-    var idPost = req.params.id;
-    var texto = req.body.texto;
-    var idUsuario = req.body.idUsuario;
+    let idPost = req.params.id;
+    let texto = req.body.texto;
+    let idUsuario = req.body.idUsuario;
 
     if (!idUsuario) return res.status(401).send("Usuário não identificado");
 
@@ -58,9 +58,9 @@ function comentar(req, res) {
 }
 
 function curtir(req, res) {
-    var idPost = req.params.id;
-    var curtir = req.body.curtir;
-    var idUsuario = req.body.idUsuario;
+    let idPost = req.params.id;
+    let curtir = req.body.curtir;
+    let idUsuario = req.body.idUsuario;
 
     if (!idUsuario) return res.status(401).send("Usuário não identificado");
 
@@ -70,9 +70,9 @@ function curtir(req, res) {
 }
 
 function deletarComentario(req, res) {
-    var idComentario = req.params.id;
-    var idUsuario = req.body.idUsuario;
-    var tipoUsuario = req.body.tipoUsuario;
+    let idComentario = req.params.id;
+    let idUsuario = req.body.idUsuario;
+    let tipoUsuario = req.body.tipoUsuario;
 
     if (!idUsuario) return res.status(401).send("Usuário não identificado");
 
@@ -82,8 +82,8 @@ function deletarComentario(req, res) {
 }
 
 function deletarPost(req, res) {
-    var idPost = req.params.id;
-    var idUsuario = req.query.idUsuario;
+    let idPost = req.params.id;
+    let idUsuario = req.query.idUsuario;
 
     postModel.deletarPost(idPost, idUsuario)
         .then(function () { res.sendStatus(200); })

@@ -1,7 +1,7 @@
-var database = require("../database/config");
+let database = require("../database/config");
 
 function cadastrar(nome, dtNasc, email, senha, imagem, estilo) {
-    var instrucaoSql = `
+    let instrucaoSql = `
         INSERT INTO usuario (nome, dtNasc, email, senha, imagemUsuario, estiloMusical) 
         VALUES ('${nome}', '${dtNasc}', '${email}', '${senha}', '${imagem}', '${estilo}');
     `;
@@ -10,7 +10,7 @@ function cadastrar(nome, dtNasc, email, senha, imagem, estilo) {
 }
 
 function autenticar(email, senha) {
-    var instrucaoSql = `
+    let instrucaoSql = `
         SELECT idUsuario, nome, email, tipoUser, imagemUsuario, estiloMusical 
         FROM usuario 
         WHERE email = '${email}' AND senha = '${senha}';
@@ -19,7 +19,7 @@ function autenticar(email, senha) {
 }
 
 function buscarUsuarioPeloId(idUsuario) {
-    var instrucaoSql = `
+    let instrucaoSql = `
         SELECT idUsuario, nome, email, dtNasc, tipoUser, imagemUsuario, estiloMusical 
         FROM usuario 
         WHERE idUsuario = ${idUsuario};
@@ -28,7 +28,7 @@ function buscarUsuarioPeloId(idUsuario) {
 }
 
 function buscarUsuarioPeloEmail(email) {
-    var instrucaoSql = `
+    let instrucaoSql = `
         SELECT idUsuario, nome, email, dtNasc, tipoUser, imagemUsuario, estiloMusical 
         FROM usuario 
         WHERE email = '${email}';
@@ -40,7 +40,7 @@ function atualizar(id, nome, email, senha, imagem) {
     let setSenha = senha ? `, senha='${senha}'` : "";
     let setImagem = imagem ? `, imagemUsuario='${imagem}'` : "";
 
-    const sql = `
+    let sql = `
         UPDATE usuario 
         SET nome='${nome}', email='${email}'${setSenha}${setImagem}
         WHERE idUsuario=${id};

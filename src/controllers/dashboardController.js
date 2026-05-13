@@ -1,4 +1,4 @@
-var dashboardModel = require("../models/dashboardModel");
+let dashboardModel = require("../models/dashboardModel");
 
 function numeros(req, res) {
     dashboardModel.numeros()

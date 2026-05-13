@@ -1,13 +1,13 @@
-var usuarioModel = require("../models/usuarioModel");
+let usuarioModel = require("../models/usuarioModel");
 
 function cadastrar(req, res) {
-    var nome = req.body.nomeServer;
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
-    var dtNasc = req.body.dtNascServer;
-    var estilo = req.body.estiloServer;
+    let nome = req.body.nomeServer;
+    let email = req.body.emailServer;
+    let senha = req.body.senhaServer;
+    let dtNasc = req.body.dtNascServer;
+    let estilo = req.body.estiloServer;
 
-    var imagem = req.file ? req.file.filename : "default.png";
+    let imagem = req.file ? req.file.filename : "default.png";
 
     if (!nome || !email || !senha || !dtNasc || !estilo) {
         res.status(400).send("Preencha todos os campos!");
@@ -22,8 +22,8 @@ function cadastrar(req, res) {
 }
 
 function autenticar(req, res) {
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
+    let email = req.body.emailServer;
+    let senha = req.body.senhaServer;
 
     if (email == undefined || senha == undefined) {
         res.status(400).send("Dados de login incompletos!");
@@ -55,19 +55,19 @@ function buscarUsuarioPeloId(req, res) {
 }
 
 function buscarUsuarioPeloEmail(req, res) {
-    var email = decodeURIComponent(req.params.email); // decodifica o @
+    let email = decodeURIComponent(req.params.email); // decodifica o @
     usuarioModel.buscarUsuarioPeloEmail(email)
         .then(resultado => res.json(resultado))
         .catch(err => res.status(500).send(err));
 }
 
 function atualizar(req, res) {
-    const id = req.params.idUsuario;
-    const nome = req.body.nome;
-    const email = req.body.email;
-    const senha = req.body.senha;
+    let id = req.params.idUsuario;
+    let nome = req.body.nome;
+    let email = req.body.email;
+    let senha = req.body.senha;
 
-    const imagem = req.file ? req.file.filename : null;
+    let imagem = req.file ? req.file.filename : null;
 
     console.log("IMAGEM RECEBIDA:", imagem); // debug
 
