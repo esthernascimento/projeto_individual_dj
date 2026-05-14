@@ -1,7 +1,6 @@
-// Para listar os posts que eu ADM fiz
 function renderizarMeusPosts() {
-    const grade = document.getElementById("grade-posts");
-    const idUsuario = sessionStorage.ID_USUARIO;
+    let grade = document.getElementById("grade-posts");
+    let idUsuario = sessionStorage.ID_USUARIO;
 
     fetch(`/posts/meus?idUsuario=${idUsuario}`)
         .then(res => res.json())
@@ -13,9 +12,10 @@ function renderizarMeusPosts() {
                 return;
             }
 
-            posts.forEach(post => {
+            for (let i = 0; i < posts.length; i++) {
+                let post = posts[i];
 
-                const card = document.createElement("div");
+                let card = document.createElement("div");
                 card.className = "card-post";
 
                 card.innerHTML = `
@@ -48,24 +48,20 @@ function renderizarMeusPosts() {
                 // adiciona no DOM primeiro
                 grade.appendChild(card);
 
-                // depois busca comentários (AGORA FUNCIONA)
-                setTimeout(() => {
-                    buscarComentarios(post.idPost);
-                }, 0);
-
-            });
+                // aq eu chamou a funncao a busca de comentários para esse post específico
+                setTimeout(() => {buscarComentarios(post.idPost);}, 0);
+            }
         });
 }
 
 // Buscar os comentarios
 function buscarComentarios(idPost) {
-    const container = document.getElementById(`comentarios-${idPost}`);
-    const idUsuarioLogado = Number(sessionStorage.ID_USUARIO);
+    let container = document.getElementById(`comentarios-${idPost}`);
+    if (!container) return; // Segurança extra
 
     fetch(`/posts/${idPost}/comentarios`)
         .then(res => res.json())
         .then(comentarios => {
-
             container.innerHTML = "";
 
             if (comentarios.length === 0) {
@@ -73,18 +69,19 @@ function buscarComentarios(idPost) {
                 return;
             }
 
-            comentarios.forEach(coment => {
+            for (let j = 0; j < comentarios.length; j++) {
+                let coment = comentarios[j];
 
-                const div = document.createElement("div");
+                let div = document.createElement("div");
                 div.className = "item-comentario";
                 div.style.display = "flex";
                 div.style.justifyContent = "space-between";
 
-                const texto = document.createElement("span");
+                let texto = document.createElement("span");
                 texto.innerHTML = `<strong>${coment.autor}:</strong> ${coment.texto}`;
 
-                const botao = document.createElement("button");
-                const img = document.createElement("img");
+                let botao = document.createElement("button");
+                let img = document.createElement("img");
                 img.src = "../assets/icon/lixeira-icon.png";
                 img.className = "img-lixo";
 
@@ -95,49 +92,6 @@ function buscarComentarios(idPost) {
                 div.appendChild(botao);
 
                 container.appendChild(div);
-            });
+            }
         });
 }
-
-// Função para excluir comentários
-function deletarComentario(idComentario, idPost) {
-    const idUsuario = sessionStorage.ID_USUARIO;
-    const tipoUsuario = sessionStorage.TIPO_USUARIO;
-
-    console.log("CLICOU DELETE", idComentario);
-
-    if (!confirm("Tem certeza que deseja apagar?")) return;
-
-    fetch(`/posts/comentarios/${idComentario}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            idUsuario,
-            tipoUsuario
-        })
-    })
-        .then(() => {
-            buscarComentarios(idPost);
-        })
-        .catch(err => console.error(err));
-}
-
-// Função para deletar o posttttt 
-function deletarPost(idPost) {
-    const idUsuario = sessionStorage.ID_USUARIO;
-
-    if (!confirm("Tem certeza que deseja apagar esse post?")) return;
-
-    fetch(`/posts/${idPost}?idUsuario=${idUsuario}`, {
-        method: "DELETE"
-    })
-        .then(res => {
-            if (!res.ok) throw new Error("Erro ao deletar");
-            alert("Post apagado!");
-            renderizarMeusPosts();
-        })
-        .catch(err => console.error("Erro:", err));
-}
-

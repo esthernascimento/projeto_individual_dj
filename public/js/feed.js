@@ -1,13 +1,13 @@
-const estrelados = {};
+let estrelados = {};
 
 function renderizarPosts() {
-  const idUsuario = sessionStorage.ID_USUARIO;
+  let idUsuario = sessionStorage.ID_USUARIO;
 
-  // Buscamos os posts passando nosso ID para saber o que já curtimos
+  // busca os posts passando pelo id dele e para saber o que já curtimos
   fetch(`/posts/listar?idUsuario=${idUsuario}`)
     .then(res => res.json())
     .then(posts => {
-      const grade = document.getElementById("grade-posts");
+      let grade = document.getElementById("grade-posts");
       grade.innerHTML = "";
 
       if (!posts || posts.length === 0) {
@@ -15,14 +15,16 @@ function renderizarPosts() {
         return;
       }
 
-      posts.forEach(post => {
-        // Define se o post começa estrelado ou não vindo do banco
+      for (let i = 0; i < posts.length; i++) {
+        let post = posts[i]; // Pega o post atual pelo índice i
+
+        // aq define se o post já vai vir estrelado ou não vindo do banco
         estrelados[post.idPost] = post.jaCurtiu > 0;
 
-        const card = document.createElement("div");
+        let card = document.createElement("div");
         card.className = "card-post";
 
-        const corEstrela = estrelados[post.idPost] ? "gold" : "white";
+        let corEstrela = estrelados[post.idPost] ? "gold" : "white";
 
         card.innerHTML = `
           <img src="../assets/uploads/${post.imagemPost}" onerror="this.src='../assets/imgs/dj-default.png'">
@@ -56,12 +58,15 @@ function renderizarPosts() {
         `;
 
         grade.appendChild(card);
-      });
+      } // fim do meu for
+    })
+    .catch(err => {
+        console.error("Erro ao renderizar posts:", err);
     });
 }
 
 function alternarEstrela(idPost) {
-  const idUsuario = Number(sessionStorage.ID_USUARIO);
+  let idUsuario = Number(sessionStorage.ID_USUARIO);
   if (!idUsuario) return alert("Faça login para estrelar!");
 
   estrelados[idPost] = !estrelados[idPost];
@@ -73,24 +78,24 @@ function alternarEstrela(idPost) {
   })
   .then(res => {
     if (res.ok) {
-        const botao = document.getElementById("estrela-" + idPost);
+        let botao = document.getElementById("estrela-" + idPost);
         botao.style.color = estrelados[idPost] ? "gold" : "white";
-        // Opcional: Recarregar posts para atualizar o contador de curtidas
-        // renderizarPosts(); 
+  
+        renderizarPosts(); 
     }
   });
 }
 
 function alternarComentarios(idPost) {
-  const secao = document.getElementById("comentarios-" + idPost);
+  let secao = document.getElementById("comentarios-" + idPost);
   secao.classList.toggle("aberta");
   if (secao.classList.contains("aberta")) buscarComentarios(idPost);
 }
 
 function enviarComentario(idPost) {
-  const input = document.getElementById("input-" + idPost);
-  const texto = input.value.trim();
-  const idUsuario = Number(sessionStorage.ID_USUARIO);
+  let input = document.getElementById("input-" + idPost);
+  let texto = input.value.trim();
+  let idUsuario = Number(sessionStorage.ID_USUARIO);
 
   if (!texto) return;
 
@@ -106,20 +111,25 @@ function enviarComentario(idPost) {
 }
 
 function buscarComentarios(idPost) {
-  const lista = document.getElementById(`lista-comentarios-${idPost}`);
+  let lista = document.getElementById(`lista-comentarios-${idPost}`);
+  
   fetch(`/posts/${idPost}/comentarios`)
     .then(res => res.json())
     .then(comentarios => {
       lista.innerHTML = "";
+
       if (comentarios.length === 0) {
         lista.innerHTML = "<small class='sem-comentarios'>Nenhum comentário ainda.</small>";
         return;
       }
-      comentarios.forEach(c => {
+
+      for (let k = 0; k < comentarios.length; k++) {
+        let c = comentarios[k];
+        
         lista.innerHTML += `
           <div class="item-comentario">
             <strong>${c.autor}:</strong> ${c.texto}
           </div>`;
-      });
+      }
     });
 }

@@ -1,9 +1,9 @@
 function validarSessao() {
-    var email = sessionStorage.EMAIL_USUARIO;
-    var nome = sessionStorage.NOME_USUARIO;
-    var tipo = sessionStorage.TIPO_USUARIO;
+    let email = sessionStorage.EMAIL_USUARIO;
+    let nome = sessionStorage.NOME_USUARIO;
+    let tipo = sessionStorage.TIPO_USUARIO;
 
-    var b_usuario = document.getElementById("b_usuario");
+    let b_usuario = document.getElementById("b_usuario");
 
     if (email != null && nome != null) {
         if (b_usuario != null) {
@@ -23,15 +23,15 @@ function limparSessao() {
 }
 
 function aguardar() {
-    var divAguardar = document.getElementById("div_aguardar");
+    let divAguardar = document.getElementById("div_aguardar");
     if (divAguardar) divAguardar.style.display = "flex";
 }
 
 function finalizarAguardar(texto) {
-    var divAguardar = document.getElementById("div_aguardar");
+    let divAguardar = document.getElementById("div_aguardar");
     if (divAguardar) divAguardar.style.display = "none";
 
-    var divErrosLogin = document.getElementById("div_erros_login");
+    let divErrosLogin = document.getElementById("div_erros_login");
     if (texto && divErrosLogin) {
         divErrosLogin.style.display = "flex";
         divErrosLogin.innerHTML = texto;
