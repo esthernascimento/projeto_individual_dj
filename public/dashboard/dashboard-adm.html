@@ -53,33 +53,51 @@
     </div>
 
     <div class="grade">
-      <!-- esquerda -->
       <div class="coluna-esquerda">
         <div class="caixa-grafico">
-          <canvas id="grafico-rosca"></canvas>
+          <canvas id="grafico-barras-generos"></canvas>
         </div>
 
         <div class="caixa-grafico">
-          <canvas id="grafico-linha"></canvas>
+          <canvas id="grafico-rosca-interacoes"></canvas>
         </div>
       </div>
 
-      <!-- direita -->
       <div class="coluna-direita">
         <div class="numeros">
+
           <div class="card-numero">
             <img src="../assets/icon/estrela-icon.png" alt="estrelas">
             <div>
-              <div class="numero-valor" id="totalCurtidas"></div> Total de Estrelas
-
+              <div class="numero-valor" id="totalCurtidas">0</div>
+              <span class="numero-rotulo">Total Estrelas</span>
             </div>
           </div>
+
           <div class="card-numero">
             <img src="../assets/icon/usuarios-icon.png" alt="usuarios">
             <div>
-              <div class="numero-valor" id="totalUsuarios"></div> Total de Usuários
+              <div class="numero-valor" id="totalUsuarios">0</div>
+              <span class="numero-rotulo">Total Usuários</span>
             </div>
           </div>
+
+          <div class="card-numero">
+            <img src="../assets/icon/usuarios-icon.png" alt="genero">
+            <div>
+              <div class="numero-valor" id="estiloDestaque" style="font-size: 16px;">---</div>
+              <span class="numero-rotulo">Gênero Top</span>
+            </div>
+          </div>
+
+          <div class="card-numero">
+            <img src="../assets/icon/usuarios-icon.png" alt="genero">
+            <div>
+              <div class="numero-valor" id="generoMenos" style="font-size: 16px;">---</div>
+              <span class="numero-rotulo">Gênero Menos Popular</span>
+            </div>
+          </div>
+
         </div>
 
         <div class="card-destaque">
@@ -89,19 +107,7 @@
 
         <div class="card-posts">
           <h3>Posts mais recentes</h3>
-          <div class="lista-posts">
-            <div class="post">
-              <div class="post-foto"></div>
-              <span class="post-texto">DESCRIÇÃO</span>
-            </div>
-            <div class="post">
-              <div class="post-foto"></div>
-              <span class="post-texto">DESCRIÇÃO</span>
-            </div>
-            <div class="post">
-              <div class="post-foto"></div>
-              <span class="post-texto">DESCRIÇÃO</span>
-            </div>
+          <div class="lista-posts" id="lista_posts_recentes">
           </div>
         </div>
 
@@ -112,6 +118,7 @@
 </body>
 
 </html>
+
 <script src="../js/sessao.js"></script>
 
 <script>
@@ -122,6 +129,7 @@
     carregarGraficoRoscaInteracoes();
     carregarPostsRecentes();
     carregarPostMaisEngajado();
+    carregarEstiloDestaque();
   };
 
   function carregarNumeros() {
@@ -134,25 +142,45 @@
       .catch(err => console.error(err));
   }
 
+  function carregarEstiloDestaque() {
+    fetch("/dashboard/generos")
+      .then(res => res.json())
+      .then(dados => {
+
+        if (dados.length > 0) {
+
+          // MAIS CADASTRADO
+          document.getElementById("estiloDestaque").innerText =
+            dados[0].estiloMusical;
+
+          // MENOS CADASTRADO
+          document.getElementById("generoMenos").innerText =
+            dados[dados.length - 1].estiloMusical;
+        }
+      })
+      .catch(err => console.error(err));
+  }
+
   function carregarGraficoBarras() {
     fetch("/dashboard/generos")
       .then(res => res.json())
       .then(dados => {
-        const labels = dados.map(g => g.estiloMusical);
-        const valores = dados.map(g => g.total);
+        const labels = [];
+        const valores = [];
 
-        new Chart(document.getElementById('grafico-rosca'), {
+        for (let i = 0; i < dados.length; i++) {
+          labels.push(dados[i].estiloMusical);
+          valores.push(dados[i].total);
+        }
+
+        new Chart(document.getElementById('grafico-barras-generos'), {
           type: 'bar',
           data: {
             labels: labels,
             datasets: [{
               label: 'Quantidade de Fãs',
               data: valores,
-              // array de cores para cada barra ficar diferente
-              backgroundColor: [
-                '#6cf76c', '#b040d0', '#471396', '#5DF8D8',
-                '#FAE251', '#FF4081', '#e74c3c', '#ecf0f1'
-              ]
+              backgroundColor: ['#6cf76c', '#b040d0', '#471396', '#5DF8D8', '#FAE251', '#FF4081']
             }]
           },
           options: {
@@ -162,7 +190,7 @@
             },
             plugins: {
               legend: { display: false },
-              title: { display: true, text: 'Gêneros Favoritos dos usuáios de acordo com o cadastro', color: '#ffffff' }
+              title: { display: true, text: 'Gêneros Favoritos (Cadastro)', color: '#ffffff' }
             }
           }
         });
@@ -172,25 +200,21 @@
 
   function carregarGraficoRoscaInteracoes() {
     fetch("/dashboard/interacoes")
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("Erro na API");
-        }
-        return res.json();
-      })
+      .then(res => res.json())
       .then(dados => {
+        let curtidas = Number(dados.curtidas);
+        let comentarios = Number(dados.comentarios);
+        let total = curtidas + comentarios;
 
-        console.log("INTERAÇÕES:", dados); // DEBUG pra mim ver
+        let pCurtidas = total > 0 ? ((curtidas / total) * 100).toFixed(1) : 0;
+        let pComentarios = total > 0 ? ((comentarios / total) * 100).toFixed(1) : 0;
 
-        new Chart(document.getElementById('grafico-linha'), {
+        new Chart(document.getElementById('grafico-rosca-interacoes'), {
           type: 'doughnut',
           data: {
-            labels: ['Curtidas', 'Comentários'],
+            labels: [`Curtidas (${pCurtidas}%)`, `Comentários (${pComentarios}%)`],
             datasets: [{
-              data: [
-                Number(dados.curtidas),
-                Number(dados.comentarios)
-              ],
+              data: [curtidas, comentarios],
               backgroundColor: ['#b040d0', '#6cf76c'],
               borderWidth: 0
             }]
@@ -198,78 +222,54 @@
           options: {
             plugins: {
               legend: { labels: { color: 'white' } },
-              title: { display: true, text: 'Engajamento Total', color: 'white' }
+              title: { display: true, text: `Engajamento Total (Soma: ${total})`, color: 'white' }
             }
           }
         });
-
       })
-      .catch(err => {
-        console.error("ERRO NO GRÁFICO:", err);
-      });
+      .catch(err => console.error("ERRO NO GRÁFICO:", err));
   }
 
-function carregarPostsRecentes() {
+  function carregarPostsRecentes() {
     fetch("/dashboard/posts-recentes")
-      .then(res => {
-          if (!res.ok) throw new Error("Erro na requisição");
-          return res.json();
-      })
+      .then(res => res.json())
       .then(posts => {
-        const lista = document.querySelector(".lista-posts");
+        const lista = document.getElementById("lista_posts_recentes");
         lista.innerHTML = "";
 
-        // Verificação de segurança: Só faz o forEach se 'posts' for uma lista
-        if (Array.isArray(posts)) {
-            posts.forEach(post => {
-              lista.innerHTML += `
+        if (posts.length > 0){
+          for (let i = 0; i < posts.length; i++) {
+            let post = posts[i];
+
+            lista.innerHTML += `
                 <div class="post">
-                    <img src="/assets/uploads/${post.imagemPost}" width="40" style="border-radius:5px;">
+                    <img src="../assets/uploads/${post.imagemPost}" onerror="this.src='../assets/imgs/dj-default.png'">
                     <div>
-                        <strong>${post.titulo}</strong> <small class="post-texto">${post.data_post}</small>
-                        <br>
-                        <span class="post-texto">${post.conteudo}</span>
+                        <strong>${post.titulo}</strong> 
+                        <small class="post-texto" style="color: #6cf76c; display: block;">${post.data_post}</small>
+                        <span class="post-texto">${post.conteudo.substring(0, 60)}...</span>
                     </div>
                 </div>
               `;
-            });
+          }
         } else {
-            lista.innerHTML = "Nenhum post encontrado.";
+          lista.innerHTML = "<p style='color:  white;'>Nenhum post encontrado.</p>";
         }
-      })
-      .catch(err => {
-          console.error("Erro ao carregar posts recentes:", err);
-          document.querySelector(".lista-posts").innerHTML = "Erro ao carregar dados.";
       });
-}
+  }
 
   function carregarPostMaisEngajado() {
     fetch("/dashboard/post-mais-engajado")
-      .then(res => {
-        if (res.status === 204) {
-          document.getElementById("spanDestaque").innerText = "Nenhum post encontrado";
-          return null;
-        }
-        return res.json();
-      })
+      .then(res => res.status === 204 ? null : res.json())
       .then(post => {
-
         if (!post) return;
-
-        const spanDestaque = document.getElementById("spanDestaque");
-
-        spanDestaque.innerHTML = `
+        document.getElementById("spanDestaque").innerHTML = `
                 POST MAIS ENGAJADO: <br>
-                <strong>${post.titulo}</strong><br>
-                <small>${post.data}</small><br>
-                <span style="color:#b040d0; font-size:15px;">
-                   ${post.engajamento} interações -
-                    ★ ${post.n_curtidas} estrelas e ${post.n_comentarios} comentários
-                </span>
+                <span style="font-size: 14px; color: #b040d0;">${post.titulo}</span><br>
+                <small style="font-size: 12px;">
+                   ★ ${post.n_curtidas} estrelas | ${post.n_comentarios} comentários
+                </small>
             `;
-      })
-      .catch(err => {
-        console.error("Erro ao carregar post:", err);
       });
   }
 </script>

@@ -11,10 +11,13 @@ function numeros() {
 
 function generos() {
     let sql = `
-        SELECT estiloMusical, COUNT(*) as total
+        SELECT 
+            estiloMusical,
+            COUNT(*) AS total
         FROM usuario
         WHERE estiloMusical IS NOT NULL
         GROUP BY estiloMusical
+        ORDER BY total DESC, estiloMusical ASC
     `;
     return database.executar(sql);
 }
@@ -73,6 +76,7 @@ function postMaisEngajado() {
     `;
     return database.executar(sql);
 }
+
 
 module.exports = {
     numeros,
