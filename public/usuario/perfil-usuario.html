@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,30 +10,32 @@
   <link rel="stylesheet" href="../css/usuario/perfil-usuario.css">
   <link rel="icon" href="../assets/imgs/thee/dj-icon.png">
 </head>
+
 <body>
 
   <div class="header">
-    <div class="container">
-      <img class="logo-header" src="./assets/imgs/thee/set-estrela.png" alt="">
+    <div class="container"><img class="logo-header" src="../assets/imgs/thee/set-estrela.png" alt="">
       <ul class="navbar">
         <li><a href="perfil-usuario.html">Perfil</a></li>
-        <li><a href="curiosidades.html">Curiosidades</a></li>
         <li><a href="feed.html">Feed</a></li>
         <li><button class="botao-sair" onclick="limparSessao()">Sair</button></li>
       </ul>
     </div>
   </div>
+   <img src="../assets/imgs/titulos/titulo-perfil.png" class="titulo-perfil">
 
   <div class="container-perfil">
     <div class="card-perfil">
+     
 
       <div class="foto-usuario">
         <div class="avatar">
-          <label for="foto-input" style="cursor: pointer;">
-            <img id="foto-perfil" src="../assets/imgs/thee/default.png" alt="Foto de perfil">
-          </label>
-          <input type="file" id="foto-input" style="display: none;" accept="image/*"
-            onchange="exibirPreview(event)">
+
+          <img id="foto-perfil" src="../assets/icon/etzinha.png">
+
+          <label for="foto-input" class="label-foto"></label>
+
+          <input type="file" id="foto-input" style="display: none;" accept="image/*" onchange="exibirPreview(event)">
         </div>
       </div>
 
@@ -62,6 +65,7 @@
   </div>
 
 </body>
+
 </html>
 
 <script src="../js/sessao.js"></script>
@@ -101,45 +105,50 @@
           document.getElementById("campo-nasc").value = u.dtNasc.substring(0, 10);
         }
 
-        if (u.imagemUsuario) {
-          document.getElementById("foto-perfil").src = "/assets/uploads/" + u.imagemUsuario;
+        if (u.imagemUsuario && u.imagemUsuario != "default.png") {
+          document.getElementById("foto-perfil").src =
+            "/assets/uploads/" + u.imagemUsuario;
+
+        } else {
+          document.getElementById("foto-perfil").src =
+            "../assets/icon/etzinha.png";
         }
       })
       .catch(err => console.error("Erro ao carregar perfil:", err));
   }
 
   function atualizarPerfil() {
-    var id    = sessionStorage.getItem("ID_USUARIO");
-    var nome  = document.getElementById("campo-nome").value.trim();   // ou nome_input
+    var id = sessionStorage.getItem("ID_USUARIO");
+    var nome = document.getElementById("campo-nome").value.trim();   // ou nome_input
     var email = document.getElementById("campo-email").value.trim();  // ou email_input
     var senha = document.getElementById("campo-senha").value.trim();  // ou senha_input
-    var foto  = document.getElementById("foto-input").files[0];       // ou imagem_input
+    var foto = document.getElementById("foto-input").files[0];       // ou imagem_input
 
     if (!nome || !email) {
-        alert("Nome e email são obrigatórios!");
-        return;
+      alert("Nome e email são obrigatórios!");
+      return;
     }
 
     // FormData em vez de JSON — igual ao cadastro
     var formData = new FormData();
-    formData.append("nome",  nome);
+    formData.append("nome", nome);
     formData.append("email", email);
     if (senha) formData.append("senha", senha);
-    if (foto)  formData.append("fotoPerfil", foto);
+    if (foto) formData.append("fotoPerfil", foto);
 
     fetch("/usuarios/" + id, {
-        method: "PUT",
-        body: formData  // sem header Content-Type — o browser define sozinho com boundary
+      method: "PUT",
+      body: formData  // sem header Content-Type — o browser define sozinho com boundary
     })
-    .then(function (res) {
+      .then(function (res) {
         if (res.ok) {
-            alert("Perfil atualizado com sucesso!");
-            sessionStorage.setItem("NOME_USUARIO",  nome);
-            sessionStorage.setItem("EMAIL_USUARIO", email);
+          alert("Perfil atualizado com sucesso!");
+          sessionStorage.setItem("NOME_USUARIO", nome);
+          sessionStorage.setItem("EMAIL_USUARIO", email);
         } else {
-            alert("Erro ao salvar. Tente novamente.");
+          alert("Erro ao salvar. Tente novamente.");
         }
-    })
-    .catch(err => console.error("Erro:", err));
-}
+      })
+      .catch(err => console.error("Erro:", err));
+  }
 </script>

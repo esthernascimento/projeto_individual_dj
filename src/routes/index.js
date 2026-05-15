@@ -23,11 +23,6 @@ router.get("usuario/perfil-usuario", function(re, res) {
     res.render("perfil-usuario")
 });
 
-router.get("usuario/curiosidades", function(req, res){
-    res.render("curiosidades")
-});
-
-
 
 /* rotas da dash */
 router.get("/dashboard-adm", function (req, res) {

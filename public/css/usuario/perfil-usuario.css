@@ -10,11 +10,19 @@ body {
 
 .container-perfil {
   flex: 1;
-  margin: 120px;
+  margin: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px 20px;
+}
+
+.titulo-perfil{
+    width: 400px;
+    margin-top: 150px;
+    display: flex;
+    align-self: center;
+    margin-bottom: 10px;
 }
 
 /* Card */
@@ -31,30 +39,70 @@ body {
 }
 
 /* Avatar */
-
-.avatar {
-  width: 110px;
-  height: 110px;
+.foto-usuario .avatar {
+  width: 100px;
+  height: 100px;
+  background-color: #ccc;
   border-radius: 50%;
-  overflow: hidden;
-  /* Adicione as linhas abaixo */
-  flex-shrink: 0; 
-  min-width: 110px; 
-  min-height: 110px;
-  /* ---------------------- */
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ccc;
-  border: 4px solid #153b22;
 }
 
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.2); /* Aumenta o tamanho da imagem em 20% para "vazar" o cinza */
-  display: block;
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #ccc;
+}
+
+#foto-perfil {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.label-foto {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.avatar {
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.botao-acao,
+.botao-sair {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.botao-acao:hover,
+.botao-sair:hover,
+.botao-enviar:hover {
+    opacity: 0.7;
 }
 
 /* Campos */
@@ -101,4 +149,24 @@ body {
 .botao-salvar:hover {
     background-color: #0f2416;
     transform: scale(1.02); 
+}
+
+#foto-perfil {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #ccc;
 }
