@@ -6,7 +6,7 @@
 
 body {
   font-family: 'Barlow', sans-serif;
-  background-color: #f0f0f0;
+    background-color: #f0f0f0;
   display: flex;
   height: 100vh;
   overflow: hidden;
@@ -93,6 +93,7 @@ body {
     background-color: #e74c3c; 
 }
 
+/* área principal — sem alteração */
 .area-principal {
   flex: 1;
   background-color: #0f2416;
@@ -170,7 +171,7 @@ body {
   min-height: 0;
 }
 
-/* cards gráfico */
+/* gráficos — sem alteração */
 .caixa-grafico {
   background-color: rgba(255,255,255,0.05);
   border-radius: 12px;
@@ -201,7 +202,7 @@ body {
   border-radius: 30px;
 }
 
-/* números */
+/* KPIs — estética nova */
 .numeros {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -210,114 +211,160 @@ body {
 }
 
 .card-numero {
-  background-color: #f0f0f0;
+  background-color: #1a3d28;
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 12px;
   padding: 14px 16px;
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: border-color 0.2s;
 }
 
+.card-numero:hover {
+  border-color: rgba(111,207,151,0.3);
+}
 .card-numero img {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.8;
 }
 
 .numero-valor {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
-  color: #111;
+  color: #6fcf97;
+  line-height: 1;
 }
 
 .numero-rotulo {
   font-size: 11px;
   font-weight: 600;
-  color: #555;
-  letter-spacing: 1px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  margin-top: 4px;
+  display: block;
 }
 
 /* post destaque */
 .card-destaque {
-  background-color: #f0f0f0;
+  background-color: rgba(255,255,255,0.05);
+  border: 1px solid rgba(111,207,151,0.2);
   border-radius: 12px;
-  padding: 14px 16px;
+  padding: 14px 18px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   flex-shrink: 0;
 }
 
 .card-destaque img {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
+  opacity: 0.7;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
 .card-destaque span {
-  font-size: 18px;
+  font-size: 13px;
   font-weight: 700;
-  color: #111;
-  letter-spacing: 1px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  line-height: 1.6;
 }
 
-/* posts recentes */
+.destaque-titulo {
+  font-size: 15px;
+  color: #6fcf97;
+  font-weight: 700;
+  display: block;
+  margin-top: 4px;
+}
+
+.destaque-stats {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  display: block;
+  margin-top: 2px;
+}
+
+/* posts recentes — estética nova */
 .card-posts {
-  background-color: #f0f0f0;
-  border-radius: 12px;
-  padding: 16px;
+  background-color: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  padding: 16px 18px;
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .card-posts h3 {
-  font-size: 14px; 
+  font-size: 11px;
   font-weight: 700;
-  color: #333;
-  letter-spacing: 2px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 12px;
+  flex-shrink: 0;
 }
 
 .lista-posts {
   display: flex;
   flex-direction: column;
-  gap: 22px; /* Aumentado o espaço entre os posts */
+  gap: 10px;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .post {
-  background-color: #0a1f12; 
+  background-color: rgba(0,0,0,0.2);
   border-radius: 10px;
-  padding: 15px; 
+  padding: 12px 14px;
   display: flex;
   align-items: center;
-  gap: 20px; 
+  gap: 14px;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: border-color 0.2s;
+  flex-shrink: 0;
+}
+
+.post:hover {
+  border-color: rgba(111,207,151,0.2);
 }
 
 .post img {
-  width: 150px !important; 
-  height: 100px !important; 
-  object-fit: cover; /* Não deixa a foto esticar feio */
+  width: 70px !important;
+  height: 50px !important;
+  object-fit: cover;
   border-radius: 8px;
   flex-shrink: 0;
 }
 
 .post strong {
   display: block;
-  font-size: 22px; 
-  color: #ffffff;  
-  margin-bottom: 4px;
+  font-size: 13px;
+  color: #fff;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
 }
 
-/* Estilo da Descrição */
+.post-data {
+  font-size: 11px;
+  color: #6fcf97;
+  display: block;
+  margin-bottom: 3px;
+}
+
 .post-texto {
-  font-size: 16px !important;
-  color: #bdc3c7;  
-  font-style: italic;
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
   line-height: 1.4;
 }
-
-
-
