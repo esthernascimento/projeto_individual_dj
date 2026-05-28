@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,23 +10,25 @@
 
 body {
   font-family: 'Barlow', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #eaeaea;
+  background-color: #f5f3f0;
   color: #333;
+  line-height: 1.6;
 }
 
 /* banner */
-.banner{
+.banner {
   margin-top: 0px;
   height: 800px;
   background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../assets/imgs/thee/banner-home.png');
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.banner .container{
+.banner .container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +47,6 @@ body {
   animation: flutuar 3s ease-in-out infinite;
 }
 
-
 @keyframes flutuar {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-20px); }
@@ -56,22 +61,20 @@ body {
   background-repeat: no-repeat;
   padding: 70px 20px;
   text-align: center;
-
   font-family: 'Courier New', Courier, monospace;
   text-transform: uppercase;
 }
 
-#titulo{
-  margin-bottom: 40px;
+#titulo {
+  margin-bottom: 60px;
 }
 
-.titulo-blog{
-  font-size: 38px;
-  font-weight: 800;
-  color: #111;
+#titulo img{
+  width: 900px ;
+  height: auto;
 }
 
-.cards-container{
+.cards-container {
   background-color: #1a3d28;
   width: 400px;
   height: 500px;
@@ -83,14 +86,20 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.cards-container img{
+.cards-container:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.5);
+}
+
+.cards-container img {
   width: 100%;
   border-radius: 15px;
 }
 
-.cards-container p{
+.cards-container p {
   font-size: 20px;
   font-weight: 600;
   line-height: 1.5;
@@ -98,30 +107,24 @@ body {
 }
 
 /* historia 2 */
-#historia-2{
+#historia-2 {
   padding: 60px 20px;
   background-color: #ffffff;
   text-align: center;
 }
 
-#historia-titulos{
+.historia-titulos {
   margin-bottom: 40px;
 }
 
-#historia-titulos h1{
+.historia-titulos h3 {
   font-size: 28px;
-  font-family: 'Courier New', Courier, monospace;
-  margin-bottom: 10px;
-}
-
-#historia-titulos h3{
-  font-size: 22px;
   color: #444;
   display: inline-block;
   padding-bottom: 4px;
 }
 
-.container-verde{
+.container-verde {
   background-color: #0f2416;
   width: 85%;
   margin: 0 auto;
@@ -134,53 +137,61 @@ body {
   position: relative;
 }
 
-#walter, #jimmy{
+#walter,
+#jimmy {
   display: flex;
   align-items: center;
   gap: 40px;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
-#walter p, #jimmy p{
+#walter p, #jimmy p {
   flex: 1;
   font-size: 20px;
   line-height: 1.6;
   text-align: left;
 }
 
-.img-walter, .img-jimmy{
+.img-walter {
   width: 350px;
   border-radius: 10px;
 }
 
-#jimmy img{
-  width: 400px;
+.img-jimmy {
+  width: 350px;
+  border-radius: 10px;
+}
+
+.globo-icon {
+  width: 350px;
 }
 
 /* historia 3 */
-#historia-3{
-  padding: 20px 20px 60px;
-  background-color: #ffffff;
+#historia-3 {
+  padding: 60px 20px;
+  background-color: #f5f3f0;
 }
 
-#historia-3 #historia-titulos{
+#historia-3 .historia-titulos {
   text-align: center;
   margin-bottom: 30px;
 }
 
-#historia-3 #historia-titulos h1{
+#historia-3 .historia-titulos h1 {
   font-size: 28px;
   font-family: 'Courier New', Courier, monospace;
   color: #1a3d28;
   margin-bottom: 10px;
 }
 
-#historia-3 #historia-titulos p{
+#historia-3 .historia-titulos p {
   font-style: italic;
   color: #555;
   font-size: 15px;
 }
 
-#container-cinza{
+#container-cinza {
   background-color: #e2e2e2;
   width: 85%;
   margin: 0 auto;
@@ -191,16 +202,16 @@ body {
   align-items: flex-start;
 }
 
-#div-esquerda{
+#div-esquerda {
   flex: 1;
 }
 
-#div-esquerda img{
+#div-esquerda img {
   width: 100%;
   border-radius: 20px;
 }
 
-#div-direita{
+#div-direita {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -208,11 +219,11 @@ body {
   gap: 20px;
 }
 
-.estrelhinhas-coloridas{
+.estrelhinhas-coloridas {
   width: 110px;
 }
 
-#div-direita p{
+#div-direita p {
   font-size: 17px;
   color: #1a3d28;
   font-weight: 600;
@@ -220,7 +231,7 @@ body {
   line-height: 1.5;
 }
 
-#div-direita img:last-child{
+#div-direita img:last-child {
   width: 100%;
   border-radius: 20px;
 }
